@@ -38,7 +38,7 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
+# PROP Output_Dir "..\..\bin\Release"
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "COLDET_EXPORTS" /YX /FD /c
@@ -63,7 +63,7 @@ LINK32=link.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Debug"
+# PROP Output_Dir "..\..\Debug"
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "COLDET_EXPORTS" /YX /FD /GZ  /c
@@ -90,35 +90,35 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\box.cpp
+SOURCE=..\..\src\box.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\box_bld.cpp
+SOURCE=..\..\src\box_bld.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\coldet.cpp
+SOURCE=..\..\src\coldet.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\coldet_bld.cpp
+SOURCE=..\..\src\coldet_bld.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\math3d.cpp
+SOURCE=..\..\src\math3d.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\mytritri.cpp
+SOURCE=..\..\src\mytritri.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\sysdep.cpp
+SOURCE=..\..\src\sysdep.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\tritri.c
+SOURCE=..\..\src\tritri.c
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -126,27 +126,27 @@ SOURCE=.\tritri.c
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\box.h
+SOURCE=..\..\src\box.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\coldet.h
+SOURCE=..\..\src\coldet.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\coldetimpl.h
+SOURCE=..\..\src\coldetimpl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\math3d.h
+SOURCE=..\..\src\math3d.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\mytritri.h
+SOURCE=..\..\src\mytritri.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\sysdep.h
+SOURCE=..\..\src\sysdep.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
