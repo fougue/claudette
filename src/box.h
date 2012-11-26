@@ -24,6 +24,7 @@
 #ifndef H_BOX
 #define H_BOX
 
+#include <cstring> // For NULL
 #include <vector>
 #include "math3d.h"
 #include "sysdep.h"
