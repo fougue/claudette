@@ -131,7 +131,7 @@ int BoxTreeInnerNode::divide(int p_depth)
 #ifdef _DEBUG
   int fnum=0;
 #endif
-  for(unsigned i=0;i<bnum;i++)
+  for(int i=0;i<bnum;i++)
   {
     BoxedTriangle* bt=m_Boxes[i];
     if (bt->center[longest]<center[longest])
