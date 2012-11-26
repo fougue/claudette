@@ -24,7 +24,7 @@
 #include "sysdep.h"
 #include "coldetimpl.h"
 #include "mytritri.h"
-#include <assert.h>
+#include <cassert>
 
 __CD__BEGIN
 
