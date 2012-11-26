@@ -148,8 +148,10 @@ class BoxTreeInnerNode : public BoxTreeNode
 {
 public:
   BoxTreeInnerNode(const Vector3D& pos, const Vector3D& size, int logdepth) 
-    : BoxTreeNode(pos,size), m_First(NULL), m_Second(NULL), 
-      m_logdepth(logdepth), m_OwnFirst(true), m_OwnSecond(true) {}
+    : BoxTreeNode(pos,size),
+      m_First(NULL), m_OwnFirst(true),
+      m_Second(NULL), m_OwnSecond(true),
+      m_logdepth(logdepth) {}
   ~BoxTreeInnerNode()
   {
     if (m_OwnFirst)  delete m_First;
