@@ -1,29 +1,72 @@
+                      FougColDet v1.0 by FougSys Ltd, fork of
+
                     ColDet - 3D Collision Detection Library
                          Copyright (C) 2000  Amir Geva
 
 
-Description:
+DESCRIPTION
+
 ColDet is a 3D collision detection library, intended for games.
 It supports generic polyhedra, and even polygon soups.
 
-Requirements:
-It is written in standard C++ and can be compiled on these systems:
-Windows: Visual C++ 6
-Windows: Borland C++ Builder 5
-Linux:   g++ 2.8
+As ColDet is no longer actively maintained, FougSys decided to fork the project to
+keep it up to date :
+  * ensure source code builds with recent C/C++ compilers
+  * use GitHub as main project infrastructure
+
+REQUIREMENTS
+
+It is written in standard C++ and can be compiled on Windows or GNU/Linux systems
+
 Other systems that have g++ will probably compile with no modification.
 The code is portable to any system with a standard C++ compliant compiler
 (as compliant as they get)
 
-Installation:
-Use the supplied Visual C++ project file (coldet.dsp)
-or the makefile (for systems with g++)
-In other cases, just create a project/makefile and include all of the source files.
+INSTALLATION
 
-Distribution:
-It is distributed under the Library GNU Public License (See the file: COPYING)
+FougColdet can be built with various build systems:
+  QMake:
+    * Go in build/qmake
+    * Optionally read fougcoldet.pro to figure out how to customize build
+    * qmake && make
+
+  GNU make:
+    The original makefile provided by ColDet to build on Unix/gcc is still available:
+    * Go in build/old
+    * make -f makefile.g++
+
+  Visual C++:
+    The original coldet.dsp VC6 project is still provided in build/vc++
+    You will also find a project/solution files for VC++ 2010
+    
+LICENSE
+
+It is distributed under the Library GNU Lesser Public License (see the file: COPYING)
 Any redistribution of the files in this package must include the entire package.
 
-Contact Information:
-   Web Site: http://photoneffect.com/coldet/
-   email:    photon@photoneffect.com
+CONTACT INFORMATION
+
+   FougSys:
+     Web Site: http://www.fougsys.fr
+     email: contact@fougsys.fr
+
+   Original author of ColDet:
+     Web Site: http://photoneffect.com/coldet/
+     email:    photon@photoneffect.com
+
+HOW TO REPORT A BUG
+
+If you think you have found a bug in FougColDet, we would like to hear
+about it so that we can fix it. The FougTools bug tracking system is
+open to the public at https://github.com/fougsys/fougcoldet/issues.
+
+Before reporting a bug, please use the bug-tracker's search functions
+to see if the issue is already known.
+
+Always include the following information in your bug report: the name
+and version number of your compiler; the name and version number of
+your operating system; the version of FougColDet you are using, and
+what options it was compiled with.
+
+If the problem you are reporting is only visible at run-time, try to
+create a small test program that shows the problem when run.
