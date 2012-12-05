@@ -48,7 +48,7 @@ CONTACT INFORMATION
 
    FougSys:
      Web Site: http://www.fougsys.fr
-     email: contact@fougsys.fr
+     email:    contact@fougsys.fr
 
    Original author of ColDet:
      Web Site: http://photoneffect.com/coldet/
@@ -57,7 +57,7 @@ CONTACT INFORMATION
 HOW TO REPORT A BUG
 
 If you think you have found a bug in FougColDet, we would like to hear
-about it so that we can fix it. The FougTools bug tracking system is
+about it so that we can fix it. The FougColDet bug tracking system is
 open to the public at https://github.com/fougsys/fougcoldet/issues.
 
 Before reporting a bug, please use the bug-tracker's search functions
