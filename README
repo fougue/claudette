@@ -28,12 +28,14 @@ FougColdet can be built with various build systems:
   QMake:
     * Go in build/qmake
     * Optionally read fougcoldet.pro to figure out how to customize build
-    * qmake && make
-
+ 
   GNU make:
     The original makefile provided by ColDet to build on Unix/gcc is still available:
     * Go in build/old
     * make -f makefile.g++
+    * qmake
+    * make
+    * make install
 
   Visual C++:
     The original coldet.dsp VC6 project is still provided in build/vc++

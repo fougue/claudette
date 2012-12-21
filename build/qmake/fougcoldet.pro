@@ -1,5 +1,3 @@
-DESTDIR = ../../bin
-
 # Note: run qmake "CONFIG += dll" build a DLL instead of a static library
 CONFIG += debug_and_release build_all
 
@@ -12,6 +10,12 @@ TARGET = fougcoldet
 !include(_local_config.pri) {
   message(No local config)
 }
+
+isEmpty(PREFIX_DIR) {
+  PREFIX_DIR = ../..
+}
+
+DESTDIR = $$PREFIX_DIR/lib
 
 TEMPLATE = lib
 
@@ -41,6 +45,10 @@ SOURCES += \
    ../../src/mytritri.cpp \
    ../../src/sysdep.cpp \
    ../../src/tritri.c
+
+include.path  = $$PREFIX_DIR/include
+include.files = ../../src/coldet.h
+INSTALLS += include
 
 #VER_MAJ = 0
 #VER_MIN = 1
