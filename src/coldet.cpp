@@ -303,9 +303,9 @@ bool CollisionModel3DImpl::sphereCollision(float origin[3], float radius)
   return false;
 }
 
-bool CollisionModel3DImpl::getCollidingTriangles(float t1[9], float t2[9], bool ModelSpace)
+bool CollisionModel3DImpl::getCollidingTriangles(float t1[9], float t2[9], CoordSpace space)
 {
-  if (ModelSpace)
+  if (space == ModelCoordSpace)
   {
     if (t1!=NULL)
     {
@@ -345,7 +345,7 @@ bool CollisionModel3DImpl::getCollidingTriangles(int& t1, int& t2)
   return true;
 }
 
-bool CollisionModel3DImpl::getCollisionPoint(float p[3], bool ModelSpace)
+bool CollisionModel3DImpl::getCollisionPoint(float p[3], CoordSpace space)
 {
   Vector3D& v=*((Vector3D*)p);
   switch (m_ColType) 
@@ -355,7 +355,7 @@ bool CollisionModel3DImpl::getCollisionPoint(float p[3], bool ModelSpace)
     case Ray:    v=m_ColPoint; break;
     default:     v=Vector3D::Zero;
   }
-  if (!ModelSpace) v=Transform(v,m_Transform);
+  if (space == WorldCoordSpace) v=Transform(v,m_Transform);
   return true;
 }
 

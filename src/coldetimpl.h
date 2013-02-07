@@ -66,9 +66,9 @@ public:
                     float segmin, float segmax);
   bool sphereCollision(float origin[3], float radius);
 
-  bool getCollidingTriangles(float t1[9], float t2[9], bool ModelSpace);
+  bool getCollidingTriangles(float t1[9], float t2[9], CoordSpace space);
   bool getCollidingTriangles(int& t1, int& t2);
-  bool getCollisionPoint(float p[3], bool ModelSpace);
+  bool getCollisionPoint(float p[3], CoordSpace space);
 
 
   int getTriangleIndex(BoxedTriangle* bt)

@@ -46,6 +46,15 @@
 class CollisionModel3D
 {
 public:
+  /** Various applicable coordinate spaces for getCollidingTriangles()
+   *  and getCollisionPoint() */
+  enum CoordSpace
+  {
+    ModelCoordSpace, /**< Coordinates are in CollisionModel3D space */
+    WorldCoordSpace  /**< Coordinates are transformed from CollisionModel3D's current
+                          transform to world space */
+  };
+
   virtual ~CollisionModel3D() {}
 
   /** Optional: Optimization for construction speed.
@@ -113,11 +122,9 @@ public:
       Only valid after a call to collision() that returned true.
       t1 is this model's triangle and t2 is the other one.
       In case of ray or sphere collision, only t1 will be valid.
-      The coordinates will be in _this_ model's coordinate space,
-      unless ModelSpace is false, in which case, coordinates will
-      be transformed by the model's current transform to world space.
   */
-  virtual bool getCollidingTriangles(float t1[9], float t2[9], bool ModelSpace=true) = 0;
+  virtual bool getCollidingTriangles(float t1[9], float t2[9],
+                                     CoordSpace space = ModelCoordSpace) = 0;
 
   /** Retrieve the pair of triangles indices that collided.
       Only valid after a call to collision() that returned true.
@@ -128,11 +135,8 @@ public:
   /** Retrieve the detected collision point. 
       Only valid after a call to collision()
       that returned true.
-      The coordinates will be in _this_ model's coordinate space,
-      unless ModelSpace is false, in which case, coordinates will
-      be transformed by the model's current transform to world space.
   */
-  virtual bool getCollisionPoint(float p[3], bool ModelSpace=true) = 0;
+  virtual bool getCollisionPoint(float p[3], CoordSpace space = ModelCoordSpace) = 0;
 
   /** Flags for static function CollisionModel3D::create() */
   enum CreateFlag
