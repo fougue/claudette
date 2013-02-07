@@ -78,21 +78,21 @@ public:
   /** Check for collision with another model.
       Do not mix model types here.
 
-      MaxProcessingTime determines the maximum time in milliseconds
-      to check for collision.  If a rejection is not found by that
-      time, the function will return true.
+      \param accuracyDepth is not yet supported
 
-      AccuracyDepth is not yet supported.
+      \param maxProcessingTime determines the maximum time in milliseconds
+             to check for collision.  If a rejection is not found by that
+             time, the function will return true.
 
-      other_transform allows overriding the other model's 
-      transform, by supplying an alternative one.
-      This can be useful when testing a model against itself
-      with different orientations.
+      \param otherTransform allows overriding the other model's
+             transform, by supplying an alternative one.
+             This can be useful when testing a model against itself
+             with different orientations.
   */
   virtual bool collision(CollisionModel3D* other,
-                         int AccuracyDepth=-1,
-                         int MaxProcessingTime=0,
-                         float* other_transform=0) = 0;
+                         int accuracyDepth = -1,
+                         int maxProcessingTime = 0,
+                         float* otherTransform = 0) = 0;
 
   /** Search option of rayCollision() for the colliding triangle */
   enum RayCollisionSearch
@@ -113,15 +113,14 @@ public:
   virtual bool rayCollision(float origin[3],
                             float direction[3],
                             RayCollisionSearch search = SearchFirstTriangle,
-                            float segmin=0.0f,
-                            float segmax=3.4e+38F) = 0;
+                            float segmin = 0.f,
+                            float segmax = 3.4e+38F) = 0;
 
   /** Returns true if the given sphere collides with the model.
       getCollidingTriangles() and getCollisionPoint() can be
       used to retrieve information about a collision.
   */
-  virtual bool sphereCollision(float origin[3],
-                               float radius) = 0;
+  virtual bool sphereCollision(float origin[3], float radius) = 0;
 
   /** Retrieve the pair of triangles that collided.
       Only valid after a call to collision() that returned true.
@@ -180,7 +179,7 @@ class Inconsistency {};
     move a lot, and certain calculations can be done every time
     its transform changes instead of every collision test. 
 */
-EXPORT CollisionModel3D* newCollisionModel3D(bool Static=false);
+EXPORT CollisionModel3D* newCollisionModel3D(bool staticModel = false);
 
 
 
@@ -194,13 +193,11 @@ EXPORT CollisionModel3D* newCollisionModel3D(bool Static=false);
     point will contain point of intersection, if one is found.
 */
 EXPORT bool SphereRayCollision(float center[3], float radius,
-                        float origin[3], float direction[3],
-                        float point[3]);
+                               float origin[3], float direction[3],
+                               float point[3]);
 
 /** Checks for intersection between 2 spheres. */
 EXPORT bool SphereSphereCollision(float c1[3], float r1,
-                           float c2[3], float r2, float point[3]);
-
-
+                                  float c2[3], float r2, float point[3]);
 
 #endif // H_COLDET

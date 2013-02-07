@@ -31,9 +31,9 @@ CollisionModel3D* CollisionModel3D::create(CreateFlag flag)
   return new CollisionModel3DImpl(flag == StaticModelFlag ? true : false);
 }
 
-EXPORT CollisionModel3D* newCollisionModel3D(bool Static)
+EXPORT CollisionModel3D* newCollisionModel3D(bool staticModel)
 {
-  return new CollisionModel3DImpl(Static);
+  return new CollisionModel3DImpl(staticModel);
 }
 
 CollisionModel3DImpl::CollisionModel3DImpl(bool Static)
