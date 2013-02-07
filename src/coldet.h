@@ -34,6 +34,8 @@
 #define EXPORT
 #endif
 
+#include <cstddef>
+
 /** Collision Model.  Will represent the mesh to be tested for
     collisions.  It has to be notified of all triangles, via
     addTriangle()
@@ -92,7 +94,7 @@ public:
   virtual bool collision(CollisionModel3D* other,
                          int accuracyDepth = -1,
                          int maxProcessingTime = 0,
-                         float* otherTransform = 0) = 0;
+                         float* otherTransform = NULL) = 0;
 
   /** Search option of rayCollision() for the colliding triangle */
   enum RayCollisionSearch
