@@ -184,7 +184,7 @@ bool CollisionModel3DImpl::collision(CollisionModel3D* other,
 
 bool CollisionModel3DImpl::rayCollision(float origin[3], 
                                         float direction[3],
-                                        bool closest,
+                                        RayCollisionSearch search,
                                         float segmin, 
                                         float segmax)
 {
@@ -235,7 +235,7 @@ bool CollisionModel3DImpl::rayCollision(float origin[3],
           Triangle* t=static_cast<Triangle*>(bt);
           if (t->intersect(O,D,col_point,tparm,segmax)) 
           {
-            if (closest)
+            if (search == SearchClosestTriangle)
             {
               if (tparm<mintparm)
               {
@@ -257,7 +257,7 @@ bool CollisionModel3DImpl::rayCollision(float origin[3],
       }
     }
   }
-  if (closest && mintparm<9e9f) return true;
+  if (search == SearchClosestTriangle && mintparm<9e9f) return true;
   return false;
 }
 

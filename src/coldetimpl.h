@@ -62,7 +62,7 @@ public:
                  int MaxProcessingTime,
                  float* other_transform);
 
-  bool rayCollision(float origin[3], float direction[3], bool closest,
+  bool rayCollision(float origin[3], float direction[3], RayCollisionSearch search,
                     float segmin, float segmax);
   bool sphereCollision(float origin[3], float radius);
 

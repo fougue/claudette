@@ -94,20 +94,25 @@ public:
                          int MaxProcessingTime=0,
                          float* other_transform=0) = 0;
 
+  /** Search option of rayCollision() for the colliding triangle */
+  enum RayCollisionSearch
+  {
+    SearchClosestTriangle, /**< Search closest triangle on the ray (will slow
+                                the test considerably) */
+    SearchFirstTriangle    /**< Search stop on the first triangle that collides with the ray */
+  };
+
   /** Returns true if the ray given in world space coordinates
       intersects with the object.  
       getCollidingTriangles() and getCollisionPoint() can be
       used to retrieve information about a collision.
-      If closest if false, the first triangle that collides with
-      the ray is used.  Otherwise the closest one will be used.
-      Closest triangle searching will slow the test considerably.
       The default ray is a standard infinite ray.  However, using
       segmin and segmax you can define a line segment along the
       ray.
   */
   virtual bool rayCollision(float origin[3],
                             float direction[3],
-                            bool closest=false,
+                            RayCollisionSearch search = SearchFirstTriangle,
                             float segmin=0.0f,
                             float segmax=3.4e+38F) = 0;
 
