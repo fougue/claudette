@@ -26,6 +26,11 @@
 
 __CD__BEGIN
 
+CollisionModel3D* CollisionModel3D::create(CreateFlag flag)
+{
+  return new CollisionModel3DImpl(flag == StaticModelFlag ? true : false);
+}
+
 EXPORT CollisionModel3D* newCollisionModel3D(bool Static)
 {
   return new CollisionModel3DImpl(Static);

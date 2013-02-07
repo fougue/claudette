@@ -121,7 +121,7 @@ public:
 
   /** Retrieve the pair of triangles indices that collided.
       Only valid after a call to collision() that returned true.
-      t1 belongs to _this_ model, while t2 is in the other one. 
+      t1 belongs to _this_ model, while t2 is in the other one.
   */
   virtual bool getCollidingTriangles(int& t1, int& t2) = 0;
 
@@ -133,6 +133,23 @@ public:
       be transformed by the model's current transform to world space.
   */
   virtual bool getCollisionPoint(float p[3], bool ModelSpace=true) = 0;
+
+  /** Flags for static function CollisionModel3D::create() */
+  enum CreateFlag
+  {
+    /** The model to be created is dynamic ie. can move */
+    DynamicModelFlag,
+    /** The model to be created is static ie. does not move
+        and certain calculations can be done every time its transform
+        changes instead of every collision test
+    */
+    StaticModelFlag
+  };
+
+  /** Create a new collision model object.
+      Use delete when finished with it
+  */
+  EXPORT static CollisionModel3D* create(CreateFlag flag = DynamicModelFlag);
 };
 
 /** Timeout exception class.  Exception will be thrown if
