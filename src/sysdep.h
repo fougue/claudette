@@ -26,9 +26,9 @@
 
 
 ///////////////////////////////////////////////////
-// g++ compiler on most systems
+// g++ compiler assumed on UNIX systems
 ///////////////////////////////////////////////////
-#ifdef GCC
+#ifdef FOUG_OS_UNIX
 
 typedef unsigned long DWORD;
 DWORD GetTickCount();
@@ -38,7 +38,7 @@ DWORD GetTickCount();
 ///////////////////////////////////////////////////
 // Windows compilers
 ///////////////////////////////////////////////////
-#elif defined(WIN32)
+#elif defined(FOUG_OS_WINDOWS)
 
   #define WIN32_LEAN_AND_MEAN
   #include <windows.h>
@@ -56,7 +56,7 @@ DWORD GetTickCount();
 // MacOS 9.0.4/MacOS X.  CodeWarrior Pro 6
 // Thanks to Marco Tenuti for this addition
 ///////////////////////////////////////////////////
-#elif defined(macintosh)
+#elif defined(FOUG_OS_MAC)
    typedef unsigned long DWORD;
    #define __CD__BEGIN
    #define __CD__END
@@ -65,7 +65,7 @@ DWORD GetTickCount();
 
 #else
 
-#error No system specified (WIN32 GCC macintosh)
+#error No system specified (FOUG_OS_UNIX FOUG_OS_WINDOWS FOUG_OS_MAC)
 
 #endif
 

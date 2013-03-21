@@ -24,22 +24,13 @@ The code is portable to any system with a standard C++ compliant compiler
 
 INSTALLATION
 
-FougColdet can be built with various build systems:
-  QMake:
-    * Go in build/qmake
-    * Optionally read fougcoldet.pro to figure out how to customize build
- 
-  GNU make:
-    The original makefile provided by ColDet to build on Unix/gcc is still available:
-    * Go in build/old
-    * make -f makefile.g++
-    * qmake
-    * make
-    * make install
+FougColdet can be built with CMake, by default a shared library is generated.
+    1. For an out-of-source build, create a directory where the build will take place (say build/)
+    2. Call cmake, passing as argument the directory where is located CMakeLists.txt
+    3. make (or nmake for Visual C++)
+    4. make install (or nmake install) 
 
-  Visual C++:
-    The original coldet.dsp VC6 project is still provided in build/vc++
-    You will also find a project/solution files for VC++ 2010
+Read CMakeLists.txt to figure out how to build debug and release libraries.
     
 LICENSE
 
