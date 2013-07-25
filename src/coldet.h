@@ -1,16 +1,16 @@
 /*   ColDet - C++ 3D Collision Detection Library
  *   Copyright (C) 2000   Amir Geva
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Library General Public
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
@@ -24,7 +24,7 @@
 /** \file coldet.h
     3D Collision Detection
 
-    Interface for the library.  
+    Interface for the library.
     Isolated from any implementation details.
 */
 #ifndef H_COLDET
@@ -57,6 +57,17 @@ public:
                           transform to world space */
   };
 
+  /** Various model types */
+  enum ModelType
+  {
+    /** The model is dynamic ie. can move */
+    DynamicModel,
+    /** The model is static ie. does not move and certain calculations can be done every time its
+     *  transform changes instead of every collision test
+     */
+    StaticModel
+  };
+
   virtual ~CollisionModel3D() {}
 
   /** Optional: Optimization for construction speed.
@@ -73,7 +84,7 @@ public:
   /** All triangles have been added, process model. */
   virtual void finalize() = 0;
 
-  /** The the current affine matrix for the model.
+  /** The current affine matrix for the model.
       See transform.txt for format information */
   virtual void setTransform(float m[16]) = 0;
 
@@ -105,7 +116,7 @@ public:
   };
 
   /** Returns true if the ray given in world space coordinates
-      intersects with the object.  
+      intersects with the object.
       getCollidingTriangles() and getCollisionPoint() can be
       used to retrieve information about a collision.
       The default ray is a standard infinite ray.  However, using
@@ -138,28 +149,16 @@ public:
   */
   virtual bool getCollidingTriangles(int& t1, int& t2) = 0;
 
-  /** Retrieve the detected collision point. 
+  /** Retrieve the detected collision point.
       Only valid after a call to collision()
       that returned true.
   */
   virtual bool getCollisionPoint(float p[3], CoordSpace space = ModelCoordSpace) = 0;
 
-  /** Flags for static function CollisionModel3D::create() */
-  enum CreateFlag
-  {
-    /** The model to be created is dynamic ie. can move */
-    DynamicModelFlag,
-    /** The model to be created is static ie. does not move
-        and certain calculations can be done every time its transform
-        changes instead of every collision test
-    */
-    StaticModelFlag
-  };
-
   /** Create a new collision model object.
-      Use delete when finished with it
-  */
-  EXPORT static CollisionModel3D* create(CreateFlag flag = DynamicModelFlag);
+   *  Use delete when finished with it
+   */
+  EXPORT static CollisionModel3D* create(ModelType type = DynamicModel);
 };
 
 /** Timeout exception class.  Exception will be thrown if
@@ -168,18 +167,18 @@ public:
 class TimeoutExpired {};
 
 /** Inconsistency exception. Exception will be thrown if
-    the model is inconsistent.  
-    Examples: 
+    the model is inconsistent.
+    Examples:
       Checking for collisions before calling finalize()
       Trying to add triangles after calling finalize()  */
 class Inconsistency {};
 
 /** Create a new collision model object.
-    Use delete when finished with it. 
+    Use delete when finished with it.
 
     Setting Static to true indicates that the model does not
     move a lot, and certain calculations can be done every time
-    its transform changes instead of every collision test. 
+    its transform changes instead of every collision test.
 */
 EXPORT CollisionModel3D* newCollisionModel3D(bool staticModel = false);
 
