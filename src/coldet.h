@@ -79,14 +79,14 @@ public:
   virtual void addTriangle(float x1, float y1, float z1,
                            float x2, float y2, float z2,
                            float x3, float y3, float z3) = 0;
-  virtual void addTriangle(float v1[3], float v2[3], float v3[3]) = 0;
+  virtual void addTriangle(const float v1[3], const float v2[3], const float v3[3]) = 0;
 
   /** All triangles have been added, process model. */
   virtual void finalize() = 0;
 
   /** The current affine matrix for the model.
       See transform.txt for format information */
-  virtual void setTransform(float m[16]) = 0;
+  virtual void setTransform(const float m[16]) = 0;
 
   /** Check for collision with another model.
       Do not mix model types here.
@@ -105,7 +105,7 @@ public:
   virtual bool collision(CollisionModel3D* other,
                          int accuracyDepth = -1,
                          int maxProcessingTime = 0,
-                         float* otherTransform = NULL) = 0;
+                         const float otherTransform[16] = NULL) = 0;
 
   /** Search option of rayCollision() for the colliding triangle */
   enum RayCollisionSearch
@@ -123,24 +123,25 @@ public:
       segmin and segmax you can define a line segment along the
       ray.
   */
-  virtual bool rayCollision(float origin[3],
-                            float direction[3],
+  virtual bool rayCollision(const float origin[3],
+                            const float direction[3],
                             RayCollisionSearch search = SearchFirstTriangle,
                             float segmin = 0.f,
-                            float segmax = 3.4e+38F) = 0;
+                            float segmax = 3.4e+38f) = 0;
 
   /** Returns true if the given sphere collides with the model.
       getCollidingTriangles() and getCollisionPoint() can be
       used to retrieve information about a collision.
   */
-  virtual bool sphereCollision(float origin[3], float radius) = 0;
+  virtual bool sphereCollision(const float origin[3], float radius) = 0;
 
   /** Retrieve the pair of triangles that collided.
       Only valid after a call to collision() that returned true.
       t1 is this model's triangle and t2 is the other one.
       In case of ray or sphere collision, only t1 will be valid.
   */
-  virtual bool getCollidingTriangles(float t1[9], float t2[9],
+  virtual bool getCollidingTriangles(float t1[9],
+                                     float t2[9],
                                      CoordSpace space = ModelCoordSpace) = 0;
 
   /** Retrieve the pair of triangles indices that collided.
@@ -193,12 +194,15 @@ EXPORT CollisionModel3D* newCollisionModel3D(bool staticModel = false);
     origin, direction define the ray
     point will contain point of intersection, if one is found.
 */
-EXPORT bool SphereRayCollision(float center[3], float radius,
-                               float origin[3], float direction[3],
+EXPORT bool SphereRayCollision(const float sphereCenter[3],
+                               float sphereRadius,
+                               const float rayOrigin[3],
+                               const float rayDirection[3],
                                float point[3]);
 
 /** Checks for intersection between 2 spheres. */
-EXPORT bool SphereSphereCollision(float c1[3], float r1,
-                                  float c2[3], float r2, float point[3]);
+EXPORT bool SphereSphereCollision(const float c1[3], float r1,
+                                  const float c2[3], float r2,
+                                  float point[3]);
 
 #endif // H_COLDET

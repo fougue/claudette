@@ -39,22 +39,22 @@ public:
   int depth;
 };
 
-bool CollisionModel3DImpl::collision(CollisionModel3D* other, 
-                                     int AccuracyDepth, 
-                                     int MaxProcessingTime,
-                                     float* other_transform)
+bool CollisionModel3DImpl::collision(CollisionModel3D* other,
+                                     int accuracyDepth,
+                                     int maxProcessingTime,
+                                     const float otherTransform[])
 {
   m_ColType=Models;
   CollisionModel3DImpl* o=static_cast<CollisionModel3DImpl*>(other);
   if (!m_Final) throw Inconsistency();
   if (!o->m_Final) throw Inconsistency();
-  Matrix3D t=( other_transform==NULL ? o->m_Transform : *((Matrix3D*)other_transform) );
+  Matrix3D t=( otherTransform==NULL ? o->m_Transform : *((const Matrix3D*)otherTransform) );
   if (m_Static) t *= m_InvTransform;
   else          t *= m_Transform.Inverse();
   RotationState rs(t);
 
-  if (AccuracyDepth<0) AccuracyDepth=0xFFFFFF;
-  if (MaxProcessingTime==0) MaxProcessingTime=0xFFFFFF;
+  if (accuracyDepth<0) accuracyDepth=0xFFFFFF;
+  if (maxProcessingTime==0) maxProcessingTime=0xFFFFFF;
   
   DWORD EndTime,BeginTime = GetTickCount();
   int num=Max(m_Triangles.size(),o->m_Triangles.size());
@@ -75,7 +75,7 @@ bool CollisionModel3DImpl::collision(CollisionModel3D* other,
       Allocated*=2;
     }
     EndTime=GetTickCount();
-    if (EndTime >= (BeginTime+MaxProcessingTime)) throw TimeoutExpired();
+    if (EndTime >= (BeginTime+maxProcessingTime)) throw TimeoutExpired();
 
     // @@@ add depth check
     //Check c=checks.back();
@@ -182,10 +182,10 @@ bool CollisionModel3DImpl::collision(CollisionModel3D* other,
   return false;
 }
 
-bool CollisionModel3DImpl::rayCollision(float origin[3], 
-                                        float direction[3],
+bool CollisionModel3DImpl::rayCollision(const float origin[],
+                                        const float direction[],
                                         RayCollisionSearch search,
-                                        float segmin, 
+                                        float segmin,
                                         float segmax)
 {
   float mintparm=9e9f,tparm;
@@ -195,14 +195,14 @@ bool CollisionModel3DImpl::rayCollision(float origin[3],
   Vector3D D;
   if (m_Static)
   {
-    O=Transform(*(Vector3D*)origin,m_InvTransform);
-    D=rotateVector(*(Vector3D*)direction,m_InvTransform);
+    O=Transform(*(const Vector3D*)origin,m_InvTransform);
+    D=rotateVector(*(const Vector3D*)direction,m_InvTransform);
   }
   else
   {
     Matrix3D inv=m_Transform.Inverse();
-    O=Transform(*(Vector3D*)origin,inv);
-    D=rotateVector(*(Vector3D*)direction,inv);
+    O=Transform(*(const Vector3D*)origin,inv);
+    D=rotateVector(*(const Vector3D*)direction,inv);
   }
   if (segmin!=0.0f) // normalize ray
   {
@@ -261,16 +261,16 @@ bool CollisionModel3DImpl::rayCollision(float origin[3],
   return false;
 }
 
-bool CollisionModel3DImpl::sphereCollision(float origin[3], float radius)
+bool CollisionModel3DImpl::sphereCollision(const float origin[], float radius)
 {
   m_ColType=Sphere;
   Vector3D O;
   if (m_Static)
-    O=Transform(*(Vector3D*)origin,m_InvTransform);
+    O=Transform(*(const Vector3D*)origin,m_InvTransform);
   else
   {
     Matrix3D inv=m_Transform.Inverse();
-    O=Transform(*(Vector3D*)origin,inv);
+    O=Transform(*(const Vector3D*)origin,inv);
   }
   std::vector<BoxTreeNode*> checks;
   checks.push_back(&m_Root);
@@ -359,29 +359,31 @@ bool CollisionModel3DImpl::getCollisionPoint(float p[3], CoordSpace space)
   return true;
 }
 
-bool SphereRayCollision(float center[3], float radius,
-                        float origin[3], float direction[3],
+bool SphereRayCollision(const float sphereCenter[3],
+                        float sphereRadius,
+                        const float rayOrigin[3],
+                        const float rayDirection[3],
                         float point[3])
 {
-  Vector3D& C=*((Vector3D*)center);
-  Vector3D& O=*((Vector3D*)origin);
-  Vector3D  D=((Vector3D*)direction)->Normalized();
-  Vector3D& P=*((Vector3D*)point);
-  Vector3D EO=C-O;
-  float v=EO*D;
-  float disc=radius*radius - (EO*EO - v*v);
+  const Vector3D& C=  *((const Vector3D*)sphereCenter);
+  const Vector3D& O = *((const Vector3D*)rayOrigin);
+  const Vector3D  D = ((const Vector3D*)rayDirection)->Normalized();
+  Vector3D& P = *((Vector3D*)point);
+  const Vector3D EO = C - O;
+  const float v = EO*D;
+  const float disc = sphereRadius*sphereRadius - (EO*EO - v*v);
   if (disc<0.0f) return false;
-  float d=sqrt(disc);
-  P=O+(v-d)*D;
+  const float d = sqrt(disc);
+  P = O + (v - d) * D;
   return true;
 }
 
-bool SphereSphereCollision(float c1[3], float r1,
-                           float c2[3], float r2,
+bool SphereSphereCollision(const float c1[], float r1,
+                           const float c2[], float r2,
                            float point[3])
 {
-  Vector3D& C1=*((Vector3D*)c1);
-  Vector3D& C2=*((Vector3D*)c2);
+  const Vector3D& C1=*((const Vector3D*)c1);
+  const Vector3D& C2=*((const Vector3D*)c2);
   float dist=(C2-C1).SquareMagnitude();
   float sum=r1+r2;
   if (dist < sum*sum)

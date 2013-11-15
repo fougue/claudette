@@ -45,7 +45,7 @@ public:
                 Vector3D(x2,y2,z2),
                 Vector3D(x3,y3,z3));
   }
-  void addTriangle(float v1[3], float v2[3], float v3[3])
+  void addTriangle(const float v1[3], const float v2[3], const float v3[3])
   {
     addTriangle(Vector3D(v1[0],v1[1],v1[2]),
                 Vector3D(v2[0],v2[1],v2[2]),
@@ -54,17 +54,20 @@ public:
   void addTriangle(const Vector3D& v1, const Vector3D& v2, const Vector3D& v3);
   void finalize();
 
-  void setTransform(float m[16]) { setTransform(*(Matrix3D*)m); }
+  void setTransform(const float m[16]) { setTransform(*(const Matrix3D*)m); }
   void setTransform(const Matrix3D& m);
 
   bool collision(CollisionModel3D* other, 
-                 int AccuracyDepth, 
-                 int MaxProcessingTime,
-                 float* other_transform);
+                 int accuracyDepth,
+                 int maxProcessingTime,
+                 const float otherTransform[16]);
 
-  bool rayCollision(float origin[3], float direction[3], RayCollisionSearch search,
-                    float segmin, float segmax);
-  bool sphereCollision(float origin[3], float radius);
+  bool rayCollision(const float origin[3],
+                    const float direction[3],
+                    RayCollisionSearch search,
+                    float segmin,
+                    float segmax);
+  bool sphereCollision(const float origin[3], float radius);
 
   bool getCollidingTriangles(float t1[9], float t2[9], CoordSpace space);
   bool getCollidingTriangles(int& t1, int& t2);
