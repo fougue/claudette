@@ -338,10 +338,12 @@ bool CollisionModel3DImpl::getCollidingTriangles(float t1[9], float t2[9], Coord
   return true;
 }
 
-bool CollisionModel3DImpl::getCollidingTriangles(int& t1, int& t2)
+bool CollisionModel3DImpl::getCollidingTriangles(int *t1, int *t2)
 {
-  t1=m_iColTri1;
-  t2=m_iColTri2;
+  if (t1 != NULL)
+    *t1 = m_iColTri1;
+  if (t2 != NULL)
+    *t2 = m_iColTri2;
   return true;
 }
 

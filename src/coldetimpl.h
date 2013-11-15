@@ -70,7 +70,7 @@ public:
   bool sphereCollision(const float origin[3], float radius);
 
   bool getCollidingTriangles(float t1[9], float t2[9], CoordSpace space);
-  bool getCollidingTriangles(int& t1, int& t2);
+  bool getCollidingTriangles(int* t1, int* t2);
   bool getCollisionPoint(float p[3], CoordSpace space);
 
 

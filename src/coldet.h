@@ -148,7 +148,7 @@ public:
       Only valid after a call to collision() that returned true.
       t1 belongs to _this_ model, while t2 is in the other one.
   */
-  virtual bool getCollidingTriangles(int& t1, int& t2) = 0;
+  virtual bool getCollidingTriangles(int* t1, int* t2) = 0;
 
   /** Retrieve the detected collision point.
       Only valid after a call to collision()
