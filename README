@@ -27,8 +27,8 @@ INSTALLATION
 FougColdet can be built with CMake, by default a shared library is generated.
     1. For an out-of-source build, create a directory where the build will take place (say build/)
     2. Call cmake, passing as argument the directory where is located CMakeLists.txt
-    3. make (or nmake for Visual C++)
-    4. make install (or nmake install) 
+    3. (n)make
+    4. (n)make install 
 
 Read CMakeLists.txt to figure out how to build debug and release libraries.
     
