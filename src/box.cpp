@@ -25,7 +25,6 @@
 #include "box.h"
 #include "mytritri.h"
 
-__CD__BEGIN
 ////////////////////////////////////////////////////
 // code from here is used in detection process
 
@@ -292,4 +291,3 @@ bool Triangle::intersect(const Triangle& t) const
                             (float*)&t.v3.x) != 0);
 }
 
-__CD__END

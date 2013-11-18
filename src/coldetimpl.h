@@ -29,7 +29,6 @@
 #include "math3d.h"
 #include <vector>
 
-__CD__BEGIN
 
 class CollisionModel3DImpl : public CollisionModel3D
 {
@@ -105,6 +104,5 @@ public:
   bool                       m_Static;
 };
 
-__CD__END
 
 #endif // H_COLDET_IMPL

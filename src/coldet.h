@@ -30,10 +30,7 @@
 #ifndef H_COLDET
 #define H_COLDET
 
-#ifndef EXPORT
-#define EXPORT
-#endif
-
+#include "global.h"
 #include <cstddef>
 
 /** Collision Model.  Will represent the mesh to be tested for
@@ -159,7 +156,7 @@ public:
   /** Create a new collision model object.
    *  Use delete when finished with it
    */
-  EXPORT static CollisionModel3D* create(ModelType type = DynamicModel);
+  FOUGCOLDET_LIB_EXPORT static CollisionModel3D* create(ModelType type = DynamicModel);
 };
 
 /** Timeout exception class.  Exception will be thrown if
@@ -181,7 +178,7 @@ class Inconsistency {};
     move a lot, and certain calculations can be done every time
     its transform changes instead of every collision test.
 */
-EXPORT CollisionModel3D* newCollisionModel3D(bool staticModel = false);
+FOUGCOLDET_LIB_EXPORT CollisionModel3D* newCollisionModel3D(bool staticModel = false);
 
 
 
@@ -194,15 +191,15 @@ EXPORT CollisionModel3D* newCollisionModel3D(bool staticModel = false);
     origin, direction define the ray
     point will contain point of intersection, if one is found.
 */
-EXPORT bool SphereRayCollision(const float sphereCenter[3],
-                               float sphereRadius,
-                               const float rayOrigin[3],
-                               const float rayDirection[3],
-                               float point[3]);
+FOUGCOLDET_LIB_EXPORT bool SphereRayCollision(const float sphereCenter[3],
+                                              float sphereRadius,
+                                              const float rayOrigin[3],
+                                              const float rayDirection[3],
+                                              float point[3]);
 
 /** Checks for intersection between 2 spheres. */
-EXPORT bool SphereSphereCollision(const float c1[3], float r1,
-                                  const float c2[3], float r2,
-                                  float point[3]);
+FOUGCOLDET_LIB_EXPORT bool SphereSphereCollision(const float c1[3], float r1,
+                                                 const float c2[3], float r2,
+                                                 float point[3]);
 
 #endif // H_COLDET

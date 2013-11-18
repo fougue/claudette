@@ -24,14 +24,13 @@
 #include "sysdep.h"
 #include "coldetimpl.h"
 
-__CD__BEGIN
 
 CollisionModel3D* CollisionModel3D::create(ModelType type)
 {
   return new CollisionModel3DImpl(type == StaticModel ? true : false);
 }
 
-EXPORT CollisionModel3D* newCollisionModel3D(bool staticModel)
+CollisionModel3D* newCollisionModel3D(bool staticModel)
 {
   return new CollisionModel3DImpl(staticModel);
 }
@@ -76,4 +75,3 @@ void CollisionModel3DImpl::finalize()
   m_Root.divide(0);
 }
 
-__CD__END

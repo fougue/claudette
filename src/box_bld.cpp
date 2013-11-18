@@ -24,8 +24,6 @@
 #include "sysdep.h"
 #include "box.h"
 
-__CD__BEGIN
-
 // point in box test
 bool Box::intersect(const Vector3D& p) const
 {
@@ -178,4 +176,3 @@ int BoxTreeInnerNode::divide(int p_depth)
   return depth+1;
 }
 
-__CD__END

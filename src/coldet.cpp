@@ -26,7 +26,6 @@
 #include "mytritri.h"
 #include <cassert>
 
-__CD__BEGIN
 
 class Check
 {
@@ -401,4 +400,3 @@ bool SphereSphereCollision(const float c1[], float r1,
   return false;
 }
 
-__CD__END

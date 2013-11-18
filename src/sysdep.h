@@ -32,8 +32,6 @@
 
 typedef unsigned long DWORD;
 DWORD GetTickCount();
-#define __CD__BEGIN
-#define __CD__END
 
 ///////////////////////////////////////////////////
 // Windows compilers
@@ -42,15 +40,6 @@ DWORD GetTickCount();
 
   #define WIN32_LEAN_AND_MEAN
   #include <windows.h>
-  #define __CD__BEGIN
-  #define __CD__END
-  #ifndef EXPORT
-    #ifdef COLDET_EXPORTS
-      #define EXPORT __declspec(dllexport)
-    #else
-      #define EXPORT __declspec(dllimport)
-    #endif
-  #endif
 
 ///////////////////////////////////////////////////
 // MacOS 9.0.4/MacOS X.  CodeWarrior Pro 6
@@ -58,8 +47,6 @@ DWORD GetTickCount();
 ///////////////////////////////////////////////////
 #elif defined(FOUG_OS_MAC)
    typedef unsigned long DWORD;
-   #define __CD__BEGIN
-   #define __CD__END
    #include <Events.h>
    #define GetTickCount() ::TickCount()
 
@@ -69,8 +56,5 @@ DWORD GetTickCount();
 
 #endif
 
-#ifndef EXPORT
-  #define EXPORT
-#endif
 
 #endif // H_SYSDEP

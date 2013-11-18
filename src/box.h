@@ -29,7 +29,6 @@
 #include "math3d.h"
 #include "sysdep.h"
 
-__CD__BEGIN
 
 /** Stores rotation vectors used in the intersection tests, 
     to avoid recalculating them each time. */
@@ -211,6 +210,5 @@ public:
 
 };
 
-__CD__END
 
 #endif // H_BOX

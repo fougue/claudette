@@ -58,6 +58,8 @@ struct Vector3D
   Vector3D& operator/=(float s) { return *this *= (1.0f/s); }
   bool      operator==(const Vector3D& v) { return x==v.x && y==v.y && z==v.z; }
 
+  const float* constData() const { return &x; }
+
   Vector3D operator-       () const { return Vector3D(-x,-y,-z); }
   float    SquareMagnitude () const { return x*x+y*y+z*z; }
   float    Magnitude       () const { return (float)sqrt(SquareMagnitude()); }
