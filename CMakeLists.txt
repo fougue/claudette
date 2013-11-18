@@ -27,7 +27,12 @@ endif()
 #endif()
 
 # Declare installs
-install(FILES src/coldet.h DESTINATION include/fougcoldet)
+install(FILES src/coldet.h
+              src/model_collision_test.h
+              src/ray_collision_test.h
+              src/sphere_collision_test.h
+              src/global.h
+        DESTINATION include/fougcoldet)
 install(TARGETS fougcoldet
           RUNTIME DESTINATION lib
           LIBRARY DESTINATION lib

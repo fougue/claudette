@@ -28,12 +28,12 @@
 ////////////////////////////////////////////////////
 // code from here is used in detection process
 
-int BoxTreeInnerNode::getTrianglesNumber()
+int BoxTreeInnerNode::getTrianglesNumber() const
 {
   return m_Boxes.size();
 }
 
-BoxedTriangle* BoxTreeInnerNode::getTriangle(int which)
+const BoxedTriangle* BoxTreeInnerNode::getTriangle(int which) const
 {
   if (which<0 || which>=getTrianglesNumber()) return NULL;
   return m_Boxes[which];
@@ -52,7 +52,7 @@ inline float DotWithCol(const Vector3D& v, const Matrix3& m, int col)
   return v.x*m(0,col) + v.y*m(1,col) + v.z*m(2,col);
 }
 
-bool Box::intersect(const Vector3D& O, float radius)
+bool Box::intersect(const Vector3D& O, float radius) const
 {
   Vector3D mx=m_Pos+m_Size;
   float dist=0.0f;
@@ -73,8 +73,7 @@ bool Box::intersect(const Vector3D& O, float radius)
   return (dist <= (radius*radius));
 }
 
-bool Box::intersect(const Vector3D& O, const Vector3D& D,
-                    float segmax)
+bool Box::intersect(const Vector3D& O, const Vector3D& D, float segmax) const
 {
   if (segmax>3e30f) return intersect(O,D); // infinite ray
   Vector3D abs_segdir, abs_diff, abs_cross; 
@@ -103,7 +102,7 @@ bool Box::intersect(const Vector3D& O, const Vector3D& D,
   return true;
 }
 
-bool Box::intersect(const Vector3D& O, const Vector3D& D)
+bool Box::intersect(const Vector3D& O, const Vector3D& D) const
 {
     Vector3D abs_segdir, abs_cross;
     float f;
@@ -136,7 +135,7 @@ bool Box::intersect(const Vector3D& O, const Vector3D& D)
     return true;
 }
 
-bool Box::intersect(const Box& b, RotationState& rs)
+bool Box::intersect(const Box& b, RotationState& rs) const
 {
   const Vector3D bCenter=Transform(b.getCenter(),rs.t);
   Vector3D EA=0.5f*getSize();
@@ -234,7 +233,7 @@ Triangle::Triangle(const Vector3D& _1, const Vector3D& _2, const Vector3D& _3)
 {}
 
 bool Triangle::intersect(const Vector3D& O, const Vector3D& D, Vector3D& cp, 
-                         float& tparm, float segmax)
+                         float& tparm, float segmax) const
 {
   Plane p(v1,v2,v3);
   float denom=p.normal*D;
@@ -252,7 +251,7 @@ bool Triangle::intersect(const Vector3D& O, const Vector3D& D, Vector3D& cp,
   return false;
 }
 
-bool Triangle::intersect(const Vector3D& O, float radius, Vector3D& cp)
+bool Triangle::intersect(const Vector3D& O, float radius, Vector3D& cp) const
 {
   Plane p(v1,v2,v3);
   float dist=p.Classify(O);
@@ -279,6 +278,15 @@ bool Triangle::intersect(const Vector3D& O, float radius, Vector3D& cp)
   }
   /////////////////////////////////////////////////////////
   return false;
+}
+
+void Triangle::copyCoords(float array[]) const
+{
+  if (array != NULL) {
+    *((Vector3D*)&array[0]) = this->v1;
+    *((Vector3D*)&array[3]) = this->v2;
+    *((Vector3D*)&array[6]) = this->v3;
+  }
 }
 
 bool Triangle::intersect(const Triangle& t) const

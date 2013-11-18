@@ -56,46 +56,25 @@ public:
   void setTransform(const float m[16]) { setTransform(*(const Matrix3D*)m); }
   void setTransform(const Matrix3D& m);
 
-  bool collision(CollisionModel3D* other, 
-                 int accuracyDepth,
-                 int maxProcessingTime,
-                 const float otherTransform[16]);
+  bool modelCollision(ModelCollisionTest* test, int maxProcessingTime = 0) const;
 
-  bool rayCollision(const float origin[3],
-                    const float direction[3],
-                    RayCollisionSearch search,
-                    float segmin,
-                    float segmax);
-  bool sphereCollision(const float origin[3], float radius);
-
-  bool getCollidingTriangles(float t1[9], float t2[9], CoordSpace space);
-  bool getCollidingTriangles(int* t1, int* t2);
-  bool getCollisionPoint(float p[3], CoordSpace space);
+  bool rayCollision(RayCollisionTest* test) const;
+  bool sphereCollision(SphereCollisionTest* test) const;
 
 
-  int getTriangleIndex(BoxedTriangle* bt)
+  int getTriangleIndex(const BoxedTriangle* bt) const
   {
     return int(bt-&(*m_Triangles.begin()));
   }
 
-  /** Stores all the actual triangles.  Other objects will use
-      pointers into this array.
-  */
+  /** Stores all the actual triangles.  Other objects will use pointers into this array.
+   */
   std::vector<BoxedTriangle> m_Triangles;
   /** Root of the hierarchy tree */
   BoxTreeInnerNode           m_Root;
   /** The current transform and its inverse */
-  Matrix3D                   m_Transform,m_InvTransform;
-  /** The triangles that last collided */
-  Triangle                   m_ColTri1,m_ColTri2;
-  /** The indices of the triangles that last collided */
-  int                        m_iColTri1,m_iColTri2;
-  /** The collision point of the last test */
-  Vector3D                   m_ColPoint;
+  Matrix3D                   m_Transform, m_InvTransform;
 
-  /** Type of the last collision test */
-  enum { Models, Ray, Sphere }       
-                             m_ColType;
   /** Flag for indicating the model is finalized. */
   bool                       m_Final;
   /** Static models will maintain the same transform for a while

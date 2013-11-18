@@ -21,7 +21,7 @@
  *
  * Or visit the home page: http://photoneffect.com/coldet/
  */
-/** \file coldet.h
+/*! \file coldet.h
     3D Collision Detection
 
     Interface for the library.
@@ -33,33 +33,28 @@
 #include "global.h"
 #include <cstddef>
 
-/** Collision Model.  Will represent the mesh to be tested for
+class ModelCollisionTest;
+class RayCollisionTest;
+class SphereCollisionTest;
+
+/*! Collision Model.  Will represent the mesh to be tested for
     collisions.  It has to be notified of all triangles, via
     addTriangle()
     After all triangles are added, a call to finalize() will
     process the information and prepare for collision tests.
-    Call collision() to check for a collision
+    Call modelCollision(), rayCollision(), sphereCollision() to check for a collision
 
     Note: Transformations must not contain scaling.
 */
 class CollisionModel3D
 {
 public:
-  /** Various applicable coordinate spaces for getCollidingTriangles()
-   *  and getCollisionPoint() */
-  enum CoordSpace
-  {
-    ModelCoordSpace, /**< Coordinates are in CollisionModel3D space */
-    WorldCoordSpace  /**< Coordinates are transformed from CollisionModel3D's current
-                          transform to world space */
-  };
-
-  /** Various model types */
+  /*! Various model types */
   enum ModelType
   {
-    /** The model is dynamic ie. can move */
+    /*! The model is dynamic ie. can move */
     DynamicModel,
-    /** The model is static ie. does not move and certain calculations can be done every time its
+    /*! The model is static ie. does not move and certain calculations can be done every time its
      *  transform changes instead of every collision test
      */
     StaticModel
@@ -67,118 +62,55 @@ public:
 
   virtual ~CollisionModel3D() {}
 
-  /** Optional: Optimization for construction speed.
-      If you know the number of triangles. */
+  /*! Optional: Optimization for construction speed. If you know the number of triangles. */
   virtual void setTriangleNumber(int num) = 0;
 
-  /** Use any of the forms of this functions to enter the coordinates
-      of the model's triangles. */
+  /*! Use any of the forms of this functions to enter the coordinates of the model's triangles. */
   virtual void addTriangle(float x1, float y1, float z1,
                            float x2, float y2, float z2,
                            float x3, float y3, float z3) = 0;
   virtual void addTriangle(const float v1[3], const float v2[3], const float v3[3]) = 0;
 
-  /** All triangles have been added, process model. */
+  /*! All triangles have been added, process model. */
   virtual void finalize() = 0;
 
-  /** The current affine matrix for the model.
-      See transform.txt for format information */
+  /*! The current affine matrix for the model.
+   *  See transform.txt for format information */
   virtual void setTransform(const float m[16]) = 0;
 
-  /** Check for collision with another model.
-      Do not mix model types here.
+  /*! Check for collision with another model (do not mix model types)
+   *
+   *  \param maxProcessingTime determines the maximum time in milliseconds
+   *         to check for collision.  If a rejection is not found by that
+   *         time, the function will return true.
+   *
+   *  \warning ModelCollisionTest::accuracyDepth() is not yet supported
+   */
+  virtual bool modelCollision(ModelCollisionTest* test, int maxProcessingTime = 0) const = 0;
 
-      \param accuracyDepth is not yet supported
+  /*! Returns true if the ray given in world space coordinates intersects with the object */
+  virtual bool rayCollision(RayCollisionTest* test) const = 0;
 
-      \param maxProcessingTime determines the maximum time in milliseconds
-             to check for collision.  If a rejection is not found by that
-             time, the function will return true.
+  /*! Returns true if the given sphere collides with the model */
+  virtual bool sphereCollision(SphereCollisionTest* test) const = 0;
 
-      \param otherTransform allows overriding the other model's
-             transform, by supplying an alternative one.
-             This can be useful when testing a model against itself
-             with different orientations.
-  */
-  virtual bool collision(CollisionModel3D* other,
-                         int accuracyDepth = -1,
-                         int maxProcessingTime = 0,
-                         const float otherTransform[16] = NULL) = 0;
-
-  /** Search option of rayCollision() for the colliding triangle */
-  enum RayCollisionSearch
-  {
-    SearchClosestTriangle, /**< Search closest triangle on the ray (will slow
-                                the test considerably) */
-    SearchFirstTriangle    /**< Search stop on the first triangle that collides with the ray */
-  };
-
-  /** Returns true if the ray given in world space coordinates
-      intersects with the object.
-      getCollidingTriangles() and getCollisionPoint() can be
-      used to retrieve information about a collision.
-      The default ray is a standard infinite ray.  However, using
-      segmin and segmax you can define a line segment along the
-      ray.
-  */
-  virtual bool rayCollision(const float origin[3],
-                            const float direction[3],
-                            RayCollisionSearch search = SearchFirstTriangle,
-                            float segmin = 0.f,
-                            float segmax = 3.4e+38f) = 0;
-
-  /** Returns true if the given sphere collides with the model.
-      getCollidingTriangles() and getCollisionPoint() can be
-      used to retrieve information about a collision.
-  */
-  virtual bool sphereCollision(const float origin[3], float radius) = 0;
-
-  /** Retrieve the pair of triangles that collided.
-      Only valid after a call to collision() that returned true.
-      t1 is this model's triangle and t2 is the other one.
-      In case of ray or sphere collision, only t1 will be valid.
-  */
-  virtual bool getCollidingTriangles(float t1[9],
-                                     float t2[9],
-                                     CoordSpace space = ModelCoordSpace) = 0;
-
-  /** Retrieve the pair of triangles indices that collided.
-      Only valid after a call to collision() that returned true.
-      t1 belongs to _this_ model, while t2 is in the other one.
-  */
-  virtual bool getCollidingTriangles(int* t1, int* t2) = 0;
-
-  /** Retrieve the detected collision point.
-      Only valid after a call to collision()
-      that returned true.
-  */
-  virtual bool getCollisionPoint(float p[3], CoordSpace space = ModelCoordSpace) = 0;
-
-  /** Create a new collision model object.
+  /*! Create a new collision model object.
    *  Use delete when finished with it
    */
   FOUGCOLDET_LIB_EXPORT static CollisionModel3D* create(ModelType type = DynamicModel);
 };
 
-/** Timeout exception class.  Exception will be thrown if
+/*! Timeout exception class.  Exception will be thrown if
     the detection algorithm could not complete within
     the given time limit. */
 class TimeoutExpired {};
 
-/** Inconsistency exception. Exception will be thrown if
+/*! Inconsistency exception. Exception will be thrown if
     the model is inconsistent.
     Examples:
       Checking for collisions before calling finalize()
       Trying to add triangles after calling finalize()  */
 class Inconsistency {};
-
-/** Create a new collision model object.
-    Use delete when finished with it.
-
-    Setting Static to true indicates that the model does not
-    move a lot, and certain calculations can be done every time
-    its transform changes instead of every collision test.
-*/
-FOUGCOLDET_LIB_EXPORT CollisionModel3D* newCollisionModel3D(bool staticModel = false);
 
 
 
@@ -186,7 +118,7 @@ FOUGCOLDET_LIB_EXPORT CollisionModel3D* newCollisionModel3D(bool staticModel = f
 // Utility Functions
 //////////////////////////////////////////////
 
-/** Checks for intersection between a ray and a sphere.
+/*! Checks for intersection between a ray and a sphere.
     center, radius define the sphere
     origin, direction define the ray
     point will contain point of intersection, if one is found.
@@ -197,7 +129,7 @@ FOUGCOLDET_LIB_EXPORT bool SphereRayCollision(const float sphereCenter[3],
                                               const float rayDirection[3],
                                               float point[3]);
 
-/** Checks for intersection between 2 spheres. */
+/*! Checks for intersection between 2 spheres. */
 FOUGCOLDET_LIB_EXPORT bool SphereSphereCollision(const float c1[3], float r1,
                                                  const float c2[3], float r2,
                                                  float point[3]);

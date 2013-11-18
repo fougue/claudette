@@ -30,19 +30,10 @@ CollisionModel3D* CollisionModel3D::create(ModelType type)
   return new CollisionModel3DImpl(type == StaticModel ? true : false);
 }
 
-CollisionModel3D* newCollisionModel3D(bool staticModel)
-{
-  return new CollisionModel3DImpl(staticModel);
-}
-
 CollisionModel3DImpl::CollisionModel3DImpl(bool Static)
-: m_Root(Vector3D::Zero, Vector3D::Zero,0),
+: m_Root(Vector3D::Zero, Vector3D::Zero, 0),
   m_Transform(Matrix3D::Identity),
   m_InvTransform(Matrix3D::Identity),
-  m_ColTri1(Vector3D::Zero,Vector3D::Zero,Vector3D::Zero),
-  m_ColTri2(Vector3D::Zero,Vector3D::Zero,Vector3D::Zero),
-  m_iColTri1(0),
-  m_iColTri2(0),
   m_Final(false),
   m_Static(Static)
 {}

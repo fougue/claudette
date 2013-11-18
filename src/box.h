@@ -65,17 +65,17 @@ public:
   /** Returns the volume of the box */
   float getVolume() const { return m_Size.x*m_Size.y*m_Size.z; }
   /** Ray intersection */
-  bool intersect(const Vector3D& O, const Vector3D& D);
+  bool intersect(const Vector3D& O, const Vector3D& D) const;
   /** Line segment intersection */
-  bool intersect(const Vector3D& O, const Vector3D& D, float segmax);
+  bool intersect(const Vector3D& O, const Vector3D& D, float segmax) const;
   /** Sphere intersection */
-  bool intersect(const Vector3D& O, float radius);
+  bool intersect(const Vector3D& O, float radius) const;
   /** Point in box */
   bool intersect(const Vector3D& p) const;
   /** Aligned box intersection */
   bool intersect(const Box& b);
   /** Oriented box intersection. */
-  bool intersect(const Box& b, RotationState& rs);
+  bool intersect(const Box& b, RotationState& rs) const;
 
   /** Position of box corner */
   Vector3D m_Pos;
@@ -105,12 +105,14 @@ public:
       This length is also relative to the magnitude of D
   */
   bool intersect(const Vector3D& O, const Vector3D& D, Vector3D& cp, 
-                 float& tparm, float segmax);
+                 float& tparm, float segmax) const;
   /** Test for intersection with a sphere (O origin) 
       Returns true if collision occured.
       Outputs collision point in cp
   */
-  bool intersect(const Vector3D& O, float radius, Vector3D& cp);
+  bool intersect(const Vector3D& O, float radius, Vector3D& cp) const;
+
+  void copyCoords(float array[9]) const;
 
   Vector3D v1,v2,v3;
   Vector3D center;
@@ -130,16 +132,20 @@ public:
   /** Returns true if the node is a leaf node. */
   virtual bool isLeaf() const  = 0;
   /** Returns the number of sons this node has */
-  virtual int            getSonsNumber() = 0;
+  virtual int            getSonsNumber() const = 0;
   /** Returns a son node, by index */ 
-  virtual BoxTreeNode*   getSon(int which) = 0;
+  virtual const BoxTreeNode*   getSon(int which) const = 0;
+  BoxTreeNode* getSon(int which)
+  { return const_cast<BoxTreeNode*>(const_cast<BoxTreeNode*>(this)->getSon(which)); }
   /** Returns the number of triangles in this node.
       Only non-zero for leaf nodes. */
-  virtual int            getTrianglesNumber() = 0;
+  virtual int            getTrianglesNumber() const = 0;
   /** Returns the boxed triangle contained in this node
       by its index 
   */
-  virtual BoxedTriangle* getTriangle(int which) = 0;
+  virtual const BoxedTriangle* getTriangle(int which) const = 0;
+  BoxedTriangle* getTriangle(int which)
+  { return const_cast<BoxedTriangle*>(const_cast<BoxTreeNode*>(this)->getTriangle(which)); }
 };
 
 /** Inner node, containing other nodes. */
@@ -167,7 +173,7 @@ public:
   /** Recursively divide this box */
   int  divide(int p_depth);
 
-  int getSonsNumber()
+  int getSonsNumber() const
   {
     int n=0;
     if (m_First!=NULL) n++;
@@ -175,10 +181,10 @@ public:
     return n;
   }
 
-  int getTrianglesNumber();
-  BoxedTriangle* getTriangle(int which);
+  int getTrianglesNumber() const;
+  const BoxedTriangle* getTriangle(int which) const;
 
-  BoxTreeNode* getSon(int which)
+  const BoxTreeNode* getSon(int which) const
   {
     if (which==0) return m_First;
     if (which==1) return m_Second;
@@ -199,10 +205,10 @@ class BoxedTriangle : public BoxTreeNode, public Triangle
 public:
   BoxedTriangle(const Vector3D& _1, const Vector3D& _2, const Vector3D& _3);
   virtual bool isLeaf() const { return true; }
-  int getSonsNumber() { return 0; }
-  BoxTreeNode* getSon(int /*which*/) { return NULL; }
-  int getTrianglesNumber() { return 1; }
-  BoxedTriangle* getTriangle(int which)
+  int getSonsNumber() const { return 0; }
+  const BoxTreeNode* getSon(int /*which*/) const { return NULL; }
+  int getTrianglesNumber() const { return 1; }
+  const BoxedTriangle* getTriangle(int which) const
   {
     if (which==0) return this;
     return NULL;
