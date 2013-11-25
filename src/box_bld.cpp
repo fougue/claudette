@@ -24,6 +24,8 @@
 #include "sysdep.h"
 #include "box.h"
 
+#include <algorithm>
+
 // point in box test
 bool Box::intersect(const Vector3D& p) const
 {
@@ -42,23 +44,23 @@ bool Box::intersect(const Box& b)
   Vector3D t2=getPosition()+getSize();
   const Vector3D& p1=b.getPosition();
   Vector3D p2=b.getPosition()+b.getSize();
-  return (Max(p1.x,t1.x) <= Min(p2.x,t2.x)  &&
-          Max(p1.y,t1.y) <= Min(p2.y,t2.y)  &&
-          Max(p1.z,t1.z) <= Min(p2.z,t2.z));
+  return (std::max(p1.x,t1.x) <= std::min(p2.x,t2.x)
+          && std::max(p1.y,t1.y) <= std::min(p2.y,t2.y)
+          && std::max(p1.z,t1.z) <= std::min(p2.z,t2.z));
 }
 
 BoxedTriangle::BoxedTriangle(const Vector3D& _1, 
                              const Vector3D& _2, 
                              const Vector3D& _3)
-                             : BoxTreeNode(), Triangle(_1,_2,_3)
+  : BoxTreeNode(), Triangle(_1,_2,_3)
 {
-  m_Pos.x=Min(Min(_1.x,_2.x),_3.x);
-  m_Pos.y=Min(Min(_1.y,_2.y),_3.y);
-  m_Pos.z=Min(Min(_1.z,_2.z),_3.z);
+  m_Pos.x=std::min(std::min(_1.x,_2.x),_3.x);
+  m_Pos.y=std::min(std::min(_1.y,_2.y),_3.y);
+  m_Pos.z=std::min(std::min(_1.z,_2.z),_3.z);
   Vector3D mx;
-  mx.x=Max(Max(_1.x,_2.x),_3.x);
-  mx.y=Max(Max(_1.y,_2.y),_3.y);
-  mx.z=Max(Max(_1.z,_2.z),_3.z);
+  mx.x=std::max(std::max(_1.x,_2.x),_3.x);
+  mx.y=std::max(std::max(_1.y,_2.y),_3.y);
+  mx.z=std::max(std::max(_1.z,_2.z),_3.z);
   m_Size=mx-getPosition();
   m_Center=getPosition()+0.5f*getSize();
 }
@@ -100,12 +102,12 @@ void BoxTreeInnerNode::recalcBounds(Vector3D& center)
   {
     BoxedTriangle* bt=m_Boxes[i];
     center+=bt->center;
-    mn.x=Min(Min(Min(bt->v1.x,bt->v2.x),bt->v3.x),mn.x);
-    mn.y=Min(Min(Min(bt->v1.y,bt->v2.y),bt->v3.y),mn.y);
-    mn.z=Min(Min(Min(bt->v1.z,bt->v2.z),bt->v3.z),mn.z);
-    mx.x=Max(Max(Max(bt->v1.x,bt->v2.x),bt->v3.x),mx.x);
-    mx.y=Max(Max(Max(bt->v1.y,bt->v2.y),bt->v3.y),mx.y);
-    mx.z=Max(Max(Max(bt->v1.z,bt->v2.z),bt->v3.z),mx.z);
+    mn.x=std::min(std::min(std::min(bt->v1.x,bt->v2.x),bt->v3.x),mn.x);
+    mn.y=std::min(std::min(std::min(bt->v1.y,bt->v2.y),bt->v3.y),mn.y);
+    mn.z=std::min(std::min(std::min(bt->v1.z,bt->v2.z),bt->v3.z),mn.z);
+    mx.x=std::max(std::max(std::max(bt->v1.x,bt->v2.x),bt->v3.x),mx.x);
+    mx.y=std::max(std::max(std::max(bt->v1.y,bt->v2.y),bt->v3.y),mx.y);
+    mx.z=std::max(std::max(std::max(bt->v1.z,bt->v2.z),bt->v3.z),mx.z);
   }
   center/=float(m_Boxes.size());
   m_Pos=mn;
@@ -172,7 +174,7 @@ int BoxTreeInnerNode::divide(int p_depth)
     delete m_Second;
     m_OwnSecond=false;
     m_Second=bt;
-  } else depth=Max(depth,s->divide(p_depth+1));
+  } else depth=std::max(depth,s->divide(p_depth+1));
   return depth+1;
 }
 

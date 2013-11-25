@@ -30,6 +30,8 @@
 #include "ray_collision_test.h"
 #include "sphere_collision_test.h"
 
+#include <algorithm>
+
 class Check
 {
 public:
@@ -67,8 +69,8 @@ bool CollisionModel3DImpl::modelCollision(ModelCollisionTest* test, int maxProce
     maxProcessingTime = 0xFFFFFF;
   
   DWORD EndTime, BeginTime = GetTickCount();
-  int num = Max(m_Triangles.size(), o->m_Triangles.size());
-  int Allocated=Max(64,(num>>4));
+  int num = std::max(m_Triangles.size(), o->m_Triangles.size());
+  int Allocated = std::max(64, (num>>4));
   std::vector<Check> checks(Allocated);
   
   int queue_idx = 1;
@@ -76,8 +78,8 @@ bool CollisionModel3DImpl::modelCollision(ModelCollisionTest* test, int maxProce
   c.m_first = &m_Root;
   c.depth = 0;
   c.m_second = &o->m_Root;
-  while (queue_idx>0) {
-    if (queue_idx>(Allocated/2)) { // Enlarge the queue
+  while (queue_idx > 0) {
+    if (queue_idx > (Allocated / 2)) { // Enlarge the queue
       Check c;
       checks.insert(checks.end(), Allocated, c);
       Allocated *= 2;

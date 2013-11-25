@@ -21,6 +21,7 @@
  *
  * Or visit the home page: http://photoneffect.com/coldet/
  */
+
 /*! \file collision_model_3d.h
  *  3D Collision Detection
  *
@@ -45,7 +46,7 @@ class SphereCollisionTest;
  *  Call modelCollision(), rayCollision(), sphereCollision() to check for a collision
  *
  */
-class CollisionModel3D
+class FOUGCOLDET_LIB_EXPORT CollisionModel3D
 {
 public:
   //! Various model types
@@ -101,7 +102,7 @@ public:
    *
    *  Use delete when finished with it
    */
-  FOUGCOLDET_LIB_EXPORT static CollisionModel3D* create(ModelType type = DynamicModel);
+  static CollisionModel3D* create(ModelType type = DynamicModel);
 };
 
 /*! \brief Timeout exception class.

@@ -328,18 +328,6 @@ ScaleMatrix3D(const float s)
 }
 
 
-template<class T>
-inline T Max(T a, T b)
-{
-  return (a>b ? a : b);
-}
-
-template<class T>
-inline T Min(T a, T b)
-{
-  return (a<b ? a : b);
-}
-
 #undef _11
 #undef _12
 #undef _13
