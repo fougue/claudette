@@ -24,7 +24,7 @@
 #ifndef H_COLDET_IMPL
 #define H_COLDET_IMPL
 
-#include "coldet.h"
+#include "collision_model_3d.h"
 #include "box.h"
 #include "math3d.h"
 #include <vector>

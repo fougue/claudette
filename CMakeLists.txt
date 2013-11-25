@@ -27,7 +27,7 @@ endif()
 #endif()
 
 # Declare installs
-install(FILES src/coldet.h
+install(FILES src/collision_model_3d.h
               src/base_collision_test.h
               src/model_collision_test.h
               src/ray_collision_test.h

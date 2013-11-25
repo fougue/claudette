@@ -21,14 +21,14 @@
  *
  * Or visit the home page: http://photoneffect.com/coldet/
  */
-/*! \file coldet.h
+/*! \file collision_model_3d.h
  *  3D Collision Detection
  *
  *  Interface for the library.
  *  Isolated from any implementation details.
  */
-#ifndef H_COLDET
-#define H_COLDET
+#ifndef FOUGCOLDET_COLLISION_MODEL_3D_H
+#define FOUGCOLDET_COLLISION_MODEL_3D_H
 
 #include "global.h"
 #include <cstddef>
@@ -141,4 +141,4 @@ FOUGCOLDET_LIB_EXPORT bool SphereSphereCollision(const float c1[3], float r1,
                                                  const float c2[3], float r2,
                                                  float point[3]);
 
-#endif // H_COLDET
+#endif // FOUGCOLDET_COLLISION_MODEL_3D_H
