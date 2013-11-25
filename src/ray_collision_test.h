@@ -3,15 +3,18 @@
 
 #include "base_collision_test.h"
 
+/*! \brief Collision test with a ray
+ */
 class FOUGCOLDET_LIB_EXPORT RayCollisionTest : public BaseCollisionTest
 {
 public:
-  /** Search option of rayCollision() for the colliding triangle */
+  //! Search option for the colliding triangle
   enum Search
   {
-    SearchClosestTriangle, /**< Search closest triangle on the ray (will slow
-                                the test considerably) */
-    SearchFirstTriangle    /**< Search stop on the first triangle that collides with the ray */
+    //! Search closest triangle on the ray (will slow the test considerably)
+    SearchClosestTriangle,
+    //! Search stop on the first triangle found that collides with the ray (may not be the closest)
+    SearchFirstTriangle
   };
 
   RayCollisionTest();
@@ -25,7 +28,7 @@ public:
 
   float raySegmentMin() const;
   float raySegmentMax() const;
-  /*! The default ray is a standard infinite ray.  However, using segmin and segmax a line segment
+  /*! The default ray is a standard infinite ray. However, using segmin and segmax a line segment
    *  along the ray can be defined
    */
   void setRaySegmentBounds(float min = 0.f, float max = 3.4e+38f);

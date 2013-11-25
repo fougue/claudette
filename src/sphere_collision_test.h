@@ -3,6 +3,8 @@
 
 #include "base_collision_test.h"
 
+/*! \brief Collision test with a sphere
+ */
 class FOUGCOLDET_LIB_EXPORT SphereCollisionTest : public BaseCollisionTest
 {
 public:

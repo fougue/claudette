@@ -3,12 +3,18 @@
 
 #include "global.h"
 
+/*! \brief Base class for all collision tests
+ *
+ *  A collision test consists of some input data (specific to the test) and output data (see
+ *  modelTriangle(), triangleId(), ...)
+ */
 class FOUGCOLDET_LIB_EXPORT BaseCollisionTest
 {
 public:
   BaseCollisionTest();
   virtual ~BaseCollisionTest();
 
+  //! Collision result, returns true if a collision was detected
   virtual bool collides() const;
 
   /*! \brief The triangle that collided (belongs to _this_ model)

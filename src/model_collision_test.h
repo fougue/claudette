@@ -5,6 +5,8 @@
 
 class CollisionModel3D;
 
+/*! \brief Collision test between two meshes
+ */
 class FOUGCOLDET_LIB_EXPORT ModelCollisionTest : public BaseCollisionTest
 {
 public:
@@ -46,7 +48,7 @@ private:
   float m_otherColTri[9];
   int m_iOtherColTri;
 
-  /** Does the collision point need to be recomputed ? */
+  //! Does the collision point need to be recomputed ?
   bool m_colPointIsDirty;
 };
 
