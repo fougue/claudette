@@ -158,7 +158,7 @@ bool CollisionModel3DImpl::modelCollision(ModelCollisionTest* test, int maxProce
       }
       else {
         float v1 = first->getVolume();
-        float v2=second->getVolume();
+        float v2 = second->getVolume();
         if (v1 > v2) {
           const BoxTreeNode* f1=first->getSon(0);
           const BoxTreeNode* f2=first->getSon(1);
@@ -198,7 +198,7 @@ bool CollisionModel3DImpl::rayCollision(RayCollisionTest *test) const
   if (test == NULL)
     return false;
 
-  float mintparm = 9e9f,tparm;
+  float mintparm = 9e9f, tparm;
   Vector3D col_point;
   Vector3D O;
   Vector3D D;
@@ -239,7 +239,7 @@ bool CollisionModel3DImpl::rayCollision(RayCollisionTest *test) const
           checks.push_back(b->getSon(sons));
       }
       else {
-        int tri=b->getTrianglesNumber();
+        int tri = b->getTrianglesNumber();
         while (tri--) {
           const BoxedTriangle* bt = b->getTriangle(tri);
           const Triangle* t = static_cast<const Triangle*>(bt);
@@ -321,29 +321,31 @@ CollisionModel3DImpl::CollisionModel3DImpl(bool Static)
 
 void CollisionModel3DImpl::addTriangle(const Vector3D& v1, const Vector3D& v2, const Vector3D& v3)
 {
-  if (m_Final) throw Inconsistency();
-  m_Triangles.push_back(BoxedTriangle(v1,v2,v3));
+  if (m_Final)
+    throw Inconsistency();
+  m_Triangles.push_back(BoxedTriangle(v1, v2, v3));
 }
 
 void CollisionModel3DImpl::setTransform(const Matrix3D& m)
 {
-  m_Transform=m;
-  if (m_Static) m_InvTransform=m_Transform.Inverse();
+  m_Transform = m;
+  if (m_Static)
+    m_InvTransform = m_Transform.Inverse();
 }
 
 void CollisionModel3DImpl::finalize()
 {
-  if (m_Final) throw Inconsistency();
+  if (m_Final)
+    throw Inconsistency();
   // Prepare initial triangle list
-  m_Final=true;
-  for(unsigned i=0;i<m_Triangles.size();i++)
-  {
-    BoxedTriangle& bt=m_Triangles[i];
+  m_Final = true;
+  for (unsigned i = 0; i < m_Triangles.size(); i++) {
+    BoxedTriangle& bt = m_Triangles[i];
     m_Root.m_Boxes.push_back(&bt);
   }
-  int logdepth=0;
-  for(int num=m_Triangles.size();num>0;num>>=1,logdepth++);
-  m_Root.m_logdepth=int(logdepth*1.5f);
+  int logdepth = 0;
+  for (int num = m_Triangles.size(); num>0; num >>= 1, ++logdepth);
+  m_Root.m_logdepth = int(logdepth*1.5f);
   m_Root.divide(0);
 }
 
@@ -366,8 +368,9 @@ bool SphereRayCollision(const float sphereCenter[3],
   const Vector3D EO = C - O;
   const float v = EO*D;
   const float disc = sphereRadius*sphereRadius - (EO*EO - v*v);
-  if (disc<0.0f) return false;
-  const float d = sqrt(disc);
+  if (disc<0.0f)
+    return false;
+  const float d = std::sqrt(disc);
   P = O + (v - d) * D;
   return true;
 }
@@ -376,17 +379,16 @@ bool SphereSphereCollision(const float c1[], float r1,
                            const float c2[], float r2,
                            float point[3])
 {
-  const Vector3D& C1=*((const Vector3D*)c1);
-  const Vector3D& C2=*((const Vector3D*)c2);
-  float dist=(C2-C1).SquareMagnitude();
-  float sum=r1+r2;
-  if (dist < sum*sum)
-  {
+  const Vector3D& C1 = *((const Vector3D*)c1);
+  const Vector3D& C2 = *((const Vector3D*)c2);
+  const float dist = (C2-C1).SquareMagnitude();
+  const float sum = r1+r2;
+  if (dist < sum*sum) {
       Vector3D& P =*((Vector3D*)point);
 
       P = C1 - C2;
       P.Normalized();
-      P*=r1;
+      P *= r1;
       P += C1;
       return true;
   }
