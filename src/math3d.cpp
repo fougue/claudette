@@ -24,6 +24,8 @@
 #include "sysdep.h"
 #include "math3d.h"
 
+#include <algorithm>
+
 const Vector3D Vector3D::Zero(0.0f,0.0f,0.0f);
 const Matrix3D Matrix3D::Identity(1.0f,0.0f,0.0f,0.0f,
                                   0.0f,1.0f,0.0f,0.0f,
@@ -80,3 +82,36 @@ Matrix3D::Inverse() const
    return (1.0f / Determinant()) * Adjoint();
 }
 
+
+
+Vector3D *Vector3D::asPointer(float *floatPtr)
+{
+  return (Vector3D*)floatPtr;
+}
+
+const Vector3D *Vector3D::asConstPointer(const float *floatPtr)
+{
+  return (const Vector3D*)floatPtr;
+}
+
+Vector3D &Vector3D::asRef(float *floatPtr)
+{
+  return *(asPointer(floatPtr));
+}
+
+const Vector3D &Vector3D::asConstRef(const float *floatPtr)
+{
+  return *(asConstPointer(floatPtr));
+}
+
+void Vector3D::fillFloatVec(float vec[], float value)
+{
+  std::fill(vec, vec + 3, value);
+}
+
+void Vector3D::setFloatVec(float vec[], float x, float y, float z)
+{
+  vec[0] = x;
+  vec[1] = y;
+  vec[2] = z;
+}

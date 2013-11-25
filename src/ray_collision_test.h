@@ -1,9 +1,9 @@
 #ifndef FOUGCOLDET_RAY_COLLISION_TEST_H
 #define FOUGCOLDET_RAY_COLLISION_TEST_H
 
-#include "global.h"
+#include "base_collision_test.h"
 
-class FOUGCOLDET_LIB_EXPORT RayCollisionTest
+class FOUGCOLDET_LIB_EXPORT RayCollisionTest : public BaseCollisionTest
 {
 public:
   /** Search option of rayCollision() for the colliding triangle */
@@ -33,22 +33,12 @@ public:
   Search raySearch() const;
   void setRaySearch(Search srh);
 
-  bool collides() const;
-
-  //! The triangle that collided (belongs to _this_ model)
-  void getModelTriangle(float tri[9]);
-  //void getWorldTriangle(float tri[9]);
-
-  //! The triangles index that collided (belongs to _this_ model)
-  int triangleId() const;
-
-  //! The detected collision point
-  const float* point() const;
-
 private:
-  class Private;
-  friend class CollisionModel3DImpl;
-  Private* const d;
+  float m_rayOrigin[3];
+  float m_rayDirection[3];
+  float m_raySegMin;
+  float m_raySegMax;
+  RayCollisionTest::Search m_raySearch;
 };
 
 #endif // FOUGCOLDET_RAY_COLLISION_TEST_H

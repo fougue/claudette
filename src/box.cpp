@@ -251,30 +251,37 @@ bool Triangle::intersect(const Vector3D& O, const Vector3D& D, Vector3D& cp,
   return false;
 }
 
-bool Triangle::intersect(const Vector3D& O, float radius, Vector3D& cp) const
+bool Triangle::intersect(const Vector3D& O, float radius, Vector3D* cp) const
 {
-  Plane p(v1,v2,v3);
-  float dist=p.Classify(O);
-  if (flabs(dist) > radius) return false;
-  Vector3D point=O-dist*p.normal;
-  TriangleDesc td(*this,p);
-  if (td.pointInTri(point))
-  {
-    cp=point;
+  if (cp == NULL)
+    return false;
+
+  Vector3D& rcp = *cp;
+  const Plane p(this->v1, this->v2, this->v3);
+  const float dist = p.Classify(O);
+  if (flabs(dist) > radius)
+    return false;
+  Vector3D point = O - dist * p.normal;
+  TriangleDesc td(*this, p);
+  if (td.pointInTri(point)) {
+    rcp = point;
     return true;
   }
   /////////////////////////////////////////////////////////
   // Added code for edge intersection detection
-  const Vector3D* v[] = { &v1, &v2, &v3, &v1 };
-  for(int i=0;i<3;++i)
-  {
-    Vector3D u(*v[i+1]-*v[i]),pa(O-*v[i]);
-    float s=(u*pa)/u.SquareMagnitude();
-    if (s<0) cp=*v[i];
-    else if (s>1) cp=*v[i+1];
-    else cp=*v[i]+s*u;
-    float sq_dist=(O-cp).SquareMagnitude();
-    if (sq_dist<(radius*radius)) return true;
+  const Vector3D* v[] = { &this->v1, &this->v2, &this->v3, &this->v1 };
+  for(int i = 0; i < 3; ++i) {
+    const Vector3D u(*v[i+1] - *v[i]), pa(O - *v[i]);
+    const float s = (u*pa) / u.SquareMagnitude();
+    if (s < 0)
+      rcp = *v[i];
+    else if (s > 1)
+      rcp = *v[i+1];
+    else
+      rcp = *v[i] + s*u;
+    const float sq_dist= (O - rcp).SquareMagnitude();
+    if (sq_dist < (radius*radius))
+      return true;
   }
   /////////////////////////////////////////////////////////
   return false;

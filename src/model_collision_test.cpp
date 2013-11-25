@@ -1,84 +1,88 @@
 #include "model_collision_test.h"
 
-#include "model_collision_test_p.h"
 #include "mytritri.h"
 
-ModelCollisionTest::Private::Private()
+#include <algorithm>
+
+ModelCollisionTest::ModelCollisionTest()
   : m_otherModel(NULL),
     m_otherModelTransform(NULL),
     m_accuracyDepth(-1),
-    m_colTri1(Vector3D::Zero, Vector3D::Zero, Vector3D::Zero),
-    m_colTri2(Vector3D::Zero, Vector3D::Zero, Vector3D::Zero),
-    m_iColTri1(-1),
-    m_iColTri2(-1),
+    m_iOtherColTri(-1),
     m_colPointIsDirty(false)
 {
-}
-
-ModelCollisionTest::ModelCollisionTest()
-  : d(new Private)
-{
+  std::fill(m_otherColTri, m_otherColTri + 9, float(0));
 }
 
 ModelCollisionTest::~ModelCollisionTest()
 {
-  delete d;
 }
 
 const CollisionModel3D *ModelCollisionTest::otherModel() const
 {
-  return d->m_otherModel;
+  return m_otherModel;
 }
 
 void ModelCollisionTest::setOtherModel(const CollisionModel3D *other)
 {
-  d->m_otherModel = other;
+  m_otherModel = other;
 }
 
 const float *ModelCollisionTest::otherModelTransform() const
 {
-  return d->m_otherModelTransform;
+  return m_otherModelTransform;
 }
 
 void ModelCollisionTest::setOtherModelTransform(const float trsf[])
 {
-  d->m_otherModelTransform = trsf;
+  m_otherModelTransform = trsf;
 }
 
 int ModelCollisionTest::accuracyDepth() const
 {
-  return d->m_accuracyDepth;
+  return m_accuracyDepth;
 }
 
 void ModelCollisionTest::setAccuracyDepth(int depth)
 {
-  d->m_accuracyDepth = depth;
+  m_accuracyDepth = depth;
 }
 
 bool ModelCollisionTest::collides() const
 {
-  return d->m_iColTri1 == -1 || d->m_iColTri2 == -1;
+  return BaseCollisionTest::collides() && m_iOtherColTri != -1;
 }
 
-void ModelCollisionTest::getModelTriangles(float t1[], float t2[])
+const float *ModelCollisionTest::otherModelTriangle() const
 {
-  d->m_colTri1.copyCoords(t1);
-  d->m_colTri2.copyCoords(t2);
+  return m_otherColTri;
 }
 
-std::pair<int, int> ModelCollisionTest::triangleIdPair() const
+int ModelCollisionTest::otherTriangleId() const
 {
-  return std::make_pair(d->m_iColTri1, d->m_iColTri2);
+  return m_iOtherColTri;
 }
 
 const float *ModelCollisionTest::point() const
 {
   if (this->collides()) {
-    if (d->m_colPointIsDirty) {
-      d->m_colPoint = my_tri_tri_intersect(d->m_colTri1, d->m_colTri2);
-      d->m_colPointIsDirty = false;
+    if (m_colPointIsDirty) {
+      ModelCollisionTest* mutableThis = const_cast<ModelCollisionTest*>(this);
+      mutableThis->computeCollisionPoint();
     }
-    return d->m_colPoint.constData();
   }
-  return NULL;
+  return BaseCollisionTest::point();
+}
+
+void ModelCollisionTest::computeCollisionPoint()
+{
+  const float* colTriPtr = this->modelTriangle();
+  const Triangle colTri(Vector3D::asConstRef(colTriPtr),
+                        Vector3D::asConstRef(colTriPtr + 3),
+                        Vector3D::asConstRef(colTriPtr + 6));
+  const Triangle otherTri(Vector3D::asConstRef(m_otherColTri),
+                          Vector3D::asConstRef(m_otherColTri + 3),
+                          Vector3D::asConstRef(m_otherColTri + 6));
+  Vector3D::asRef(this->mutablePoint()) = my_tri_tri_intersect(colTri, otherTri);
+  m_colPointIsDirty = false;
 }

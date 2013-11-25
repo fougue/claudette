@@ -66,6 +66,16 @@ struct Vector3D
   Vector3D Normalized      () const { return (1.0f/Magnitude())*(*this); }
   float    operator[] (int i) const { return ((float*)&x)[i]; }
   float&   operator[] (int i)       { return ((float*)&x)[i]; }
+
+  // Casting tools
+  static Vector3D* asPointer(float* floatPtr);
+  static const Vector3D* asConstPointer(const float* floatPtr);
+  static Vector3D& asRef(float* floatPtr);
+  static const Vector3D& asConstRef(const float* floatPtr);
+
+  // Float array tools
+  static void fillFloatVec(float vec[3], float value);
+  static void setFloatVec(float vec[3], float x, float y, float z);
 };
 
 #define _11 sclr.s11
@@ -156,9 +166,9 @@ struct Plane
     d = -normal * a;
   }
 
-  float Classify(const Vector3D& v)
+  float Classify(const Vector3D& v) const
   {
-    return v * normal + d;
+    return v * this->normal + this->d;
   }
 };
 

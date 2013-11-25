@@ -1,63 +1,29 @@
 #include "sphere_collision_test.h"
 
-#include "sphere_collision_test_p.h"
-
-SphereCollisionTest::Private::Private()
-  : m_sphereCenter(0, 0, 0),
-    m_sphereRadius(0),
-    m_colTri(Vector3D::Zero, Vector3D::Zero, Vector3D::Zero),
-    m_iColTri(-1)
-{
-}
+#include "math3d.h"
 
 SphereCollisionTest::SphereCollisionTest()
-  : d(new Private)
+  : m_sphereRadius(0)
 {
-}
-
-SphereCollisionTest::~SphereCollisionTest()
-{
-  delete d;
+  Vector3D::fillFloatVec(m_sphereCenter, 0);
 }
 
 const float *SphereCollisionTest::sphereCenter() const
 {
-  return d->m_sphereCenter.constData();
+  return m_sphereCenter;
 }
 
 void SphereCollisionTest::setSphereCenter(float x, float y, float z)
 {
-  d->m_sphereCenter.x = x;
-  d->m_sphereCenter.y = y;
-  d->m_sphereCenter.z = z;
+  Vector3D::setFloatVec(m_sphereCenter, x, y, z);
 }
 
 float SphereCollisionTest::sphereRadius() const
 {
-  return d->m_sphereRadius;
+  return m_sphereRadius;
 }
 
 void SphereCollisionTest::setSphereRadius(float radius)
 {
-  d->m_sphereRadius = radius;
-}
-
-bool SphereCollisionTest::collides() const
-{
-  return d->m_iColTri != -1;
-}
-
-void SphereCollisionTest::getModelTriangle(float tri[])
-{
-  d->m_colTri.copyCoords(tri);
-}
-
-int SphereCollisionTest::triangleId() const
-{
-  return d->m_iColTri;
-}
-
-const float *SphereCollisionTest::point() const
-{
-  return d->m_colPoint.constData();
+  m_sphereRadius = radius;
 }

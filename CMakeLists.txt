@@ -28,6 +28,7 @@ endif()
 
 # Declare installs
 install(FILES src/coldet.h
+              src/base_collision_test.h
               src/model_collision_test.h
               src/ray_collision_test.h
               src/sphere_collision_test.h

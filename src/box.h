@@ -110,7 +110,7 @@ public:
       Returns true if collision occured.
       Outputs collision point in cp
   */
-  bool intersect(const Vector3D& O, float radius, Vector3D& cp) const;
+  bool intersect(const Vector3D& O, float radius, Vector3D *cp) const;
 
   void copyCoords(float array[9]) const;
 

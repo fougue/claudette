@@ -1,13 +1,11 @@
 #ifndef FOUGCOLDET_MODEL_COLLISION_TEST_H
 #define FOUGCOLDET_MODEL_COLLISION_TEST_H
 
-#include "global.h"
-
-#include <utility>
+#include "base_collision_test.h"
 
 class CollisionModel3D;
 
-class FOUGCOLDET_LIB_EXPORT ModelCollisionTest
+class FOUGCOLDET_LIB_EXPORT ModelCollisionTest : public BaseCollisionTest
 {
 public:
   ModelCollisionTest();
@@ -28,25 +26,28 @@ public:
 
   bool collides() const;
 
-  /*! The pair of triangles that collided (t1 is this model's triangle and t2 is the other one)
-   */
-  void getModelTriangles(float t1[9], float t2[9]);
+  //! The triangle that collided (in other model)
+  const float* otherModelTriangle() const;
 
-  /*! \brief The pair of triangles indices that collided
-   *
-   * First index belongs to the model where CollisionModel3D::modelCollision() was called.
-   * Second index belongs to otherModel()
-   */
-  std::pair<int, int> triangleIdPair() const;
+  //! The index of the triangle that collided (belongs to other model)
+  int otherTriangleId() const;
 
-  /*! The detected collision point
-   */
   const float* point() const;
 
 private:
-  class Private;
+  void computeCollisionPoint();
+
   friend class CollisionModel3DImpl;
-  Private* const d;
+
+  const CollisionModel3D* m_otherModel;
+  const float* m_otherModelTransform;
+  int m_accuracyDepth;
+
+  float m_otherColTri[9];
+  int m_iOtherColTri;
+
+  /** Does the collision point need to be recomputed ? */
+  bool m_colPointIsDirty;
 };
 
 #endif // FOUGCOLDET_MODEL_COLLISION_TEST_H

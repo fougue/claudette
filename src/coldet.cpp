@@ -27,11 +27,8 @@
 #include <cassert>
 
 #include "model_collision_test.h"
-#include "model_collision_test_p.h"
 #include "ray_collision_test.h"
-#include "ray_collision_test_p.h"
 #include "sphere_collision_test.h"
-#include "sphere_collision_test_p.h"
 
 class Check
 {
@@ -47,9 +44,9 @@ public:
 bool CollisionModel3DImpl::modelCollision(ModelCollisionTest* test, int maxProcessingTime) const
 {
   const CollisionModel3DImpl* o = static_cast<const CollisionModel3DImpl*>(test->otherModel());
-  test->d->m_iColTri1 = -1;
-  test->d->m_iColTri2 = -1;
-  test->d->m_colPointIsDirty = true;
+  test->m_iColTri = -1;
+  test->m_iOtherColTri = -1;
+  test->m_colPointIsDirty = true;
 
   if (!m_Final)
     throw Inconsistency();
@@ -66,7 +63,7 @@ bool CollisionModel3DImpl::modelCollision(ModelCollisionTest* test, int maxProce
   int accuracyDepth = test->accuracyDepth();
   if (accuracyDepth < 0)
     accuracyDepth = 0xFFFFFF;
-  if (maxProcessingTime==0)
+  if (maxProcessingTime == 0)
     maxProcessingTime = 0xFFFFFF;
   
   DWORD EndTime, BeginTime = GetTickCount();
@@ -109,10 +106,10 @@ bool CollisionModel3DImpl::modelCollision(ModelCollisionTest* test, int maxProce
             for (int j = 0; j < tnum1; j++) {
               const BoxedTriangle* bt1 = first->getTriangle(j);
               if (tt.intersect(*bt1)) {
-                test->d->m_colTri1 = *bt1;
-                test->d->m_iColTri1 = this->getTriangleIndex(bt1);
-                test->d->m_colTri2 = tt;
-                test->d->m_iColTri2 = o->getTriangleIndex(bt2);
+                bt1->copyCoords(test->m_colTri);
+                test->m_iColTri = this->getTriangleIndex(bt1);
+                tt.copyCoords(test->m_otherColTri);
+                test->m_iOtherColTri = o->getTriangleIndex(bt2);
                 return true;
               }
             }
@@ -196,16 +193,16 @@ bool CollisionModel3DImpl::rayCollision(RayCollisionTest *test) const
   float segmin = test->raySegmentMin();
   float segmax = test->raySegmentMax();
 
-  test->d->m_iColTri = -1;
+  test->m_iColTri = -1;
 
   if (m_Static) {
-    O = Transform(*(const Vector3D*)test->rayOrigin(), m_InvTransform);
-    D = rotateVector(*(const Vector3D*)test->rayDirection(),m_InvTransform);
+    O = Transform(Vector3D::asConstRef(test->rayOrigin()), m_InvTransform);
+    D = rotateVector(Vector3D::asConstRef(test->rayDirection()), m_InvTransform);
   }
   else {
     const Matrix3D inv = m_Transform.Inverse();
-    O = Transform(*(const Vector3D*)test->rayOrigin(), inv);
-    D = rotateVector(*(const Vector3D*)test->rayDirection(), inv);
+    O = Transform(Vector3D::asConstRef(test->rayOrigin()), inv);
+    D = rotateVector(Vector3D::asConstRef(test->rayDirection()), inv);
   }
   // TODO: use better comparison
   if (segmin != 0.0f) { // Normalize ray
@@ -221,10 +218,10 @@ bool CollisionModel3DImpl::rayCollision(RayCollisionTest *test) const
   std::vector<const BoxTreeNode*> checks;
   checks.push_back(&m_Root);
   while (!checks.empty()) {
-    const BoxTreeNode* b=checks.back();
+    const BoxTreeNode* b = checks.back();
     checks.pop_back();
     if (b->intersect(O, D, segmax)) {
-      int sons=b->getSonsNumber();
+      int sons = b->getSonsNumber();
       if (sons) {
         while (sons--)
           checks.push_back(b->getSon(sons));
@@ -236,17 +233,17 @@ bool CollisionModel3DImpl::rayCollision(RayCollisionTest *test) const
           const Triangle* t = static_cast<const Triangle*>(bt);
           if (t->intersect(O, D, col_point, tparm, segmax))  {
             if (test->raySearch() == RayCollisionTest::SearchClosestTriangle) {
-              if (tparm<mintparm) {
+              if (tparm < mintparm) {
                 mintparm = tparm;
-                test->d->m_colTri = *bt;
-                test->d->m_iColTri = this->getTriangleIndex(bt);
-                test->d->m_colPoint = col_point;
+                bt->copyCoords(test->m_colTri);
+                test->m_iColTri = this->getTriangleIndex(bt);
+                Vector3D::asRef(test->m_colPnt) = col_point;
               }
             }
             else {
-              test->d->m_colTri = *bt;
-              test->d->m_iColTri = this->getTriangleIndex(bt);
-              test->d->m_colPoint = col_point;
+              bt->copyCoords(test->m_colTri);
+              test->m_iColTri = this->getTriangleIndex(bt);
+              Vector3D::asRef(test->m_colPnt) = col_point;
               return true;
             }
           }
@@ -264,20 +261,20 @@ bool CollisionModel3DImpl::sphereCollision(SphereCollisionTest *test) const
   if (test == NULL)
     return false;
 
-  test->d->m_iColTri = -1;
+  test->m_iColTri = -1;
 
   Vector3D O;
   if (m_Static) {
-    O = Transform(*(const Vector3D*)test->sphereCenter(), m_InvTransform);
+    O = Transform(Vector3D::asConstRef(test->sphereCenter()), m_InvTransform);
   }
   else {
     const Matrix3D inv = m_Transform.Inverse();
-    O = Transform(*(const Vector3D*)test->sphereCenter(), inv);
+    O = Transform(Vector3D::asConstRef(test->sphereCenter()), inv);
   }
   std::vector<const BoxTreeNode*> checks;
   checks.push_back(&m_Root);
   while (!checks.empty()) {
-    const BoxTreeNode* b=checks.back();
+    const BoxTreeNode* b = checks.back();
     checks.pop_back();
     if (b->intersect(O, test->sphereRadius())) {
       int sons = b->getSonsNumber();
@@ -286,13 +283,13 @@ bool CollisionModel3DImpl::sphereCollision(SphereCollisionTest *test) const
           checks.push_back(b->getSon(sons));
       }
       else {
-        int tri=b->getTrianglesNumber();
+        int tri = b->getTrianglesNumber();
         while (tri--) {
-          const BoxedTriangle* bt=b->getTriangle(tri);
-          const Triangle* t=static_cast<const Triangle*>(bt);
-          if (t->intersect(O, test->sphereRadius(), test->d->m_colPoint)) {
-            test->d->m_colTri = *bt;
-            test->d->m_iColTri = this->getTriangleIndex(bt);
+          const BoxedTriangle* bt = b->getTriangle(tri);
+          const Triangle* t = static_cast<const Triangle*>(bt);
+          if (t->intersect(O, test->sphereRadius(), Vector3D::asPointer(test->m_colPnt))) {
+            bt->copyCoords(test->m_colTri);
+            test->m_iColTri = this->getTriangleIndex(bt);
             return true;
           }
         }
