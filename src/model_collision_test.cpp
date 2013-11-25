@@ -9,7 +9,8 @@ ModelCollisionTest::ModelCollisionTest()
     m_otherModelTransform(NULL),
     m_accuracyDepth(-1),
     m_iOtherColTri(-1),
-    m_colPointIsDirty(false)
+    m_colPointIsDirty(false),
+    m_maxProcessingTimedOut(false)
 {
   std::fill(m_otherColTri, m_otherColTri + 9, float(0));
 }
@@ -51,6 +52,11 @@ void ModelCollisionTest::setAccuracyDepth(int depth)
 bool ModelCollisionTest::collides() const
 {
   return BaseCollisionTest::collides() && m_iOtherColTri != -1;
+}
+
+bool ModelCollisionTest::maxProcessingTimedOut() const
+{
+  return m_maxProcessingTimedOut;
 }
 
 const float *ModelCollisionTest::otherModelTriangle() const

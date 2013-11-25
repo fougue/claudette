@@ -105,13 +105,6 @@ public:
   static CollisionModel3D* create(ModelType type = DynamicModel);
 };
 
-/*! \brief Timeout exception class.
- *
- *  Exception will be thrown if the detection algorithm could not complete within the given
- *  time limit.
-*/
-class TimeoutExpired {};
-
 /*! \brief Inconsistency exception.
  *
  *  Exception will be thrown if the model is inconsistent.

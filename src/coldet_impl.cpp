@@ -50,6 +50,7 @@ bool CollisionModel3DImpl::modelCollision(ModelCollisionTest* test, int maxProce
   test->m_iColTri = -1;
   test->m_iOtherColTri = -1;
   test->m_colPointIsDirty = true;
+  test->m_maxProcessingTimedOut = false;
 
   if (!m_Final)
     throw Inconsistency();
@@ -69,25 +70,29 @@ bool CollisionModel3DImpl::modelCollision(ModelCollisionTest* test, int maxProce
   if (maxProcessingTime == 0)
     maxProcessingTime = 0xFFFFFF;
   
-  DWORD EndTime, BeginTime = GetTickCount();
-  int num = std::max(m_Triangles.size(), o->m_Triangles.size());
-  int Allocated = std::max(64, (num>>4));
-  std::vector<Check> checks(Allocated);
+  const DWORD beginTime = GetTickCount();
+  DWORD endTime = 0;
+
+  const int num = std::max(m_Triangles.size(), o->m_Triangles.size());
+  int allocated = std::max(64, (num>>4));
+  std::vector<Check> checks(allocated);
   
   int queue_idx = 1;
-  Check& c=checks[0];
+  Check& c = checks[0];
   c.m_first = &m_Root;
   c.depth = 0;
   c.m_second = &o->m_Root;
   while (queue_idx > 0) {
-    if (queue_idx > (Allocated / 2)) { // Enlarge the queue
+    if (queue_idx > (allocated / 2)) { // Enlarge the queue
       Check c;
-      checks.insert(checks.end(), Allocated, c);
-      Allocated *= 2;
+      checks.insert(checks.end(), allocated, c);
+      allocated *= 2;
     }
-    EndTime=GetTickCount();
-    if (EndTime >= (BeginTime + maxProcessingTime))
-      throw TimeoutExpired();
+    endTime = GetTickCount();
+    if (endTime >= (beginTime + maxProcessingTime)) {
+      test->m_maxProcessingTimedOut = true;
+      return false;
+    }
 
     // @@@ add depth check
     //Check c=checks.back();

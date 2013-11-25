@@ -27,6 +27,7 @@ public:
   void setAccuracyDepth(int depth);
 
   bool collides() const;
+  bool maxProcessingTimedOut() const;
 
   //! The triangle that collided (in other model)
   const float* otherModelTriangle() const;
@@ -50,6 +51,8 @@ private:
 
   //! Does the collision point need to be recomputed ?
   bool m_colPointIsDirty;
+
+  bool m_maxProcessingTimedOut;
 };
 
 #endif // FOUGCOLDET_MODEL_COLLISION_TEST_H
