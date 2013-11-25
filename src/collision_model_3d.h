@@ -86,9 +86,11 @@ public:
    *
    *  \param maxProcessingTime determines the maximum time in milliseconds
    *         to check for collision.  If a rejection is not found by that
-   *         time, the function will return true.
+   *         time, the function will return true. \n
    *
    *  \warning ModelCollisionTest::accuracyDepth() is not yet supported
+   *
+   *  \sa ModelCollisionTest::maxProcessingTimedOut()
    */
   virtual bool modelCollision(ModelCollisionTest* test, int maxProcessingTime = 0) const = 0;
 

@@ -46,7 +46,7 @@ public:
 
 bool CollisionModel3DImpl::modelCollision(ModelCollisionTest* test, int maxProcessingTime) const
 {
-  const CollisionModel3DImpl* o = static_cast<const CollisionModel3DImpl*>(test->otherModel());
+  const CollisionModel3DImpl* other = static_cast<const CollisionModel3DImpl*>(test->otherModel());
   test->m_iColTri = -1;
   test->m_iOtherColTri = -1;
   test->m_colPointIsDirty = true;
@@ -54,9 +54,9 @@ bool CollisionModel3DImpl::modelCollision(ModelCollisionTest* test, int maxProce
 
   if (!m_Final)
     throw Inconsistency();
-  if (!o->m_Final)
+  if (!other->m_Final)
     throw Inconsistency();
-  Matrix3D t = (test->otherModelTransform() == NULL ? o->m_Transform :
+  Matrix3D t = (test->otherModelTransform() == NULL ? other->m_Transform :
                                                       *((const Matrix3D*)test->otherModelTransform()));
   if (m_Static)
     t *= m_InvTransform;
@@ -73,15 +73,19 @@ bool CollisionModel3DImpl::modelCollision(ModelCollisionTest* test, int maxProce
   const DWORD beginTime = GetTickCount();
   DWORD endTime = 0;
 
-  const int num = std::max(m_Triangles.size(), o->m_Triangles.size());
+  const int num = std::max(m_Triangles.size(), other->m_Triangles.size());
   int allocated = std::max(64, (num>>4));
   std::vector<Check> checks(allocated);
   
   int queue_idx = 1;
-  Check& c = checks[0];
-  c.m_first = &m_Root;
-  c.depth = 0;
-  c.m_second = &o->m_Root;
+
+  { // Initialize first Check object
+    Check& c = checks[0];
+    c.m_first = &m_Root;
+    c.depth = 0;
+    c.m_second = &other->m_Root;
+  }
+
   while (queue_idx > 0) {
     if (queue_idx > (allocated / 2)) { // Enlarge the queue
       Check c;
@@ -108,16 +112,16 @@ bool CollisionModel3DImpl::modelCollision(ModelCollisionTest* test, int maxProce
         {
           for (int i = 0; i < tnum2; i++) {
             const BoxedTriangle* bt2 = second->getTriangle(i);
-            Triangle tt(Transform(bt2->v1, rs.t),
-                        Transform(bt2->v2, rs.t),
-                        Transform(bt2->v3, rs.t));
+            const Triangle tt(Transform(bt2->v1, rs.t),
+                              Transform(bt2->v2, rs.t),
+                              Transform(bt2->v3, rs.t));
             for (int j = 0; j < tnum1; j++) {
               const BoxedTriangle* bt1 = first->getTriangle(j);
               if (tt.intersect(*bt1)) {
                 bt1->copyCoords(test->m_colTri);
                 test->m_iColTri = this->getTriangleIndex(bt1);
                 tt.copyCoords(test->m_otherColTri);
-                test->m_iOtherColTri = o->getTriangleIndex(bt2);
+                test->m_iOtherColTri = other->getTriangleIndex(bt2);
                 return true;
               }
             }
