@@ -29,7 +29,6 @@
 #include "math3d.h"
 #include <vector>
 
-
 class CollisionModel3DImpl : public CollisionModel3D
 {
 public:
