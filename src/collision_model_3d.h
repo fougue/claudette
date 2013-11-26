@@ -74,16 +74,27 @@ public:
   //! All triangles have been added, process model
   virtual void finalize() = 0;
 
-  /*! \brief The current affine matrix for the model.
+  /*! \brief The current affine matrix for the model
    *
-   *  \note Transformations must not contain scaling.
+   *  Matrix format is column-major order :
+   *  \code
+   *    a11 a12 a13 Tx
+   *    a21 a22 a23 Ty
+   *    a31 a32 a33 Tz
+   *     0   0   0   1
    *
-   *  See transform.txt for format information
+   *  Array: { a11, a21, a31, 0, a12, a22, a32, 0, a13, a23, a33, 0,  Tx,  Ty,  Tz, 1 }
+   *
+   *  \endcode
+   *
+   *  \note Transformations must not contain scaling
+   *
    */
   virtual void setTransform(const float m[16]) = 0;
 
   /*! \brief Check for collision with another model (do not mix model types)
    *
+   *  \param test the test object for mesh/mesh collisions
    *  \param maxProcessingTime determines the maximum time in milliseconds
    *         to check for collision.  If a rejection is not found by that
    *         time, the function will return true. \n
