@@ -216,8 +216,8 @@ bool CollisionModel3DImpl::rayCollision(RayCollisionTest *test) const
     O = Transform(Vector3D::asConstRef(test->rayOrigin()), inv);
     D = rotateVector(Vector3D::asConstRef(test->rayDirection()), inv);
   }
-  // TODO: use better comparison
-  if (segmin != 0.0f) { // Normalize ray
+
+  if (!fuzzyIsNull(segmin)) { // Normalize ray
     O += segmin * D;
     segmax -= segmin;
     segmin = 0.0f;

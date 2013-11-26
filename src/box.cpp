@@ -237,7 +237,7 @@ bool Triangle::intersect(const Vector3D& O, const Vector3D& D, Vector3D& cp,
 {
   Plane p(v1,v2,v3);
   float denom=p.normal*D;
-  if (IsZero(denom)) return false;
+  if (fuzzyIsNull(denom)) return false;
   float t=-(p.d+p.normal*O)/denom;
   if (t<=0.0f) return false;
   if (t>segmax) return false;

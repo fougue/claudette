@@ -32,8 +32,10 @@ struct Matrix3D;
 struct Plane; 
 
 inline float flabs(float f) { return (f>=0.0f?f:-f); }
-const float epsilon=1e-8f;
-inline bool IsZero(float f) { return flabs(f)<epsilon; }
+inline bool fuzzyIsNull(float f)
+{
+    return std::fabs(f) < 1e-8f;
+}
 
 Vector3D operator*(float scalar, const Vector3D& v);
 /** Dot product. */
