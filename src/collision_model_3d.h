@@ -45,6 +45,24 @@ class SphereCollisionTest;
  *  for collision tests. \n
  *  Call modelCollision(), rayCollision(), sphereCollision() to check for a collision
  *
+ *  \section CollisionModel3d_model_setup Model setup
+ *
+ *  For each mesh, create a collision model with:
+ *  \code
+ *    CollisionModel3D* model = CollisionModel3D::create();
+ *  \endcode
+ *  (Shared meshes can use the same model)
+ *
+ *  Add all the triangles the mesh has to the collision model with:
+ *  \code
+ *    model->addTriangle(vertex1, vertex2, vertex3);
+ *  \endcode
+ *
+ *  Then call:
+ *  \code
+ *    model->finalize();
+ *  \endcode
+ *
  */
 class FOUGCOLDET_LIB_EXPORT CollisionModel3D
 {
