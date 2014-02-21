@@ -14,17 +14,17 @@ add_library(fougcoldet ${ALL_SRC_FILES})
 
 # Specific flags depending on platform
 if(WIN32)
-  add_definitions(-DFOUG_OS_WINDOWS -DCOLDET_EXPORTS)
+  add_definitions(-DNOMINMAX -DFOUG_OS_WINDOWS -DCOLDET_EXPORTS)
 elseif(APPLE)
   add_definitions(-DFOUG_OS_MAC)
 elseif(UNIX)
   add_definitions(-DFOUG_OS_UNIX)
 endif()
 
-#if(BUILD_SHARED_LIBS)
-#  add_definitions(-DFOUG_LIB_DLL
-#                  -DFOUG_LIB_MAKE_DLL)
-#endif()
+if(BUILD_SHARED_LIBS)
+  add_definitions(-DFOUGCOLDET_LIB_DLL
+                  -DFOUGCOLDET_LIB_MAKE_DLL)
+endif()
 
 # Declare installs
 install(FILES src/collision_model_3d.h
