@@ -123,11 +123,11 @@ int BoxTreeInnerNode::divide(int p_depth)
   if (m_Boxes.empty()) return 0;
   Vector3D center;
   recalcBounds(center);
-  int longest=createSons(center);
-  BoxTreeInnerNode* f=static_cast<BoxTreeInnerNode*>(m_First);
-  BoxTreeInnerNode* s=static_cast<BoxTreeInnerNode*>(m_Second);
+  int longest = createSons(center);
+  BoxTreeInnerNode* f = static_cast<BoxTreeInnerNode*>(m_First);
+  BoxTreeInnerNode* s = static_cast<BoxTreeInnerNode*>(m_Second);
   int depth=1;
-  int bnum=m_Boxes.size();
+  const std::size_t bnum = m_Boxes.size();
 #ifdef _DEBUG
   int fnum=0;
 #endif
@@ -147,8 +147,8 @@ int BoxTreeInnerNode::divide(int p_depth)
     }
   }
   
-  int b1num=f->m_Boxes.size();
-  int b2num=s->m_Boxes.size();
+  const std::size_t b1num = f->m_Boxes.size();
+  const std::size_t b2num = s->m_Boxes.size();
   if ((b1num==bnum  ||  b2num==bnum))// && p_depth>m_logdepth)
   {
     delete m_First;  m_First=NULL;

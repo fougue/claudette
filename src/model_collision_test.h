@@ -26,7 +26,6 @@ public:
   int accuracyDepth() const;
   void setAccuracyDepth(int depth);
 
-  bool collides() const;
   bool maxProcessingTimedOut() const;
 
   //! The triangle that collided (in other model)
@@ -35,12 +34,10 @@ public:
   //! The index of the triangle that collided (belongs to other model)
   int otherTriangleId() const;
 
-  const float* point() const;
+  void computePoint();
 
 private:
-  void computeCollisionPoint();
-
-  friend class CollisionModel3DImpl;
+  friend class CollisionModel3D;
 
   const CollisionModel3D* m_otherModel;
   const float* m_otherModelTransform;

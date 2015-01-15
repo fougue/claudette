@@ -5,7 +5,8 @@
 #include <algorithm>
 
 BaseCollisionTest::BaseCollisionTest()
-  : m_iColTri(-1)
+  : m_collides(false),
+    m_iColTri(-1)
 {
   Vector3D::fillFloatVec(m_colPnt, 0);
   std::fill(m_colTri, m_colTri + 9, float(0));
@@ -17,7 +18,7 @@ BaseCollisionTest::~BaseCollisionTest()
 
 bool BaseCollisionTest::collides() const
 {
-  return m_iColTri != -1;
+  return m_collides;
 }
 
 const float *BaseCollisionTest::modelTriangle() const

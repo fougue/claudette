@@ -49,7 +49,8 @@ class SphereCollisionTest;
  *
  *  For each mesh, create a collision model with:
  *  \code
- *    CollisionModel3D* model = CollisionModel3D::create();
+ *    // Static collision model :
+ *    CollisionModel3D* model = new CollisionModel3D;
  *  \endcode
  *  (Shared meshes can use the same model)
  *
@@ -77,20 +78,21 @@ public:
     StaticModel
   };
 
-  virtual ~CollisionModel3D() {}
+  CollisionModel3D(ModelType type = StaticModel);
+  ~CollisionModel3D();
 
   //! Optional: Optimization for construction speed. If you know the number of triangles
-  virtual void setTriangleNumber(int num) = 0;
+  void setTriangleCount(int num);
 
   //! Add a triangle to the mesh
-  virtual void addTriangle(float x1, float y1, float z1,
-                           float x2, float y2, float z2,
-                           float x3, float y3, float z3) = 0;
+  void addTriangle(float x1, float y1, float z1,
+                   float x2, float y2, float z2,
+                   float x3, float y3, float z3);
   //! \overload
-  virtual void addTriangle(const float v1[3], const float v2[3], const float v3[3]) = 0;
+  void addTriangle(const float v1[3], const float v2[3], const float v3[3]);
 
   //! All triangles have been added, process model
-  virtual void finalize() = 0;
+  void finalize();
 
   /*! \brief The current affine matrix for the model
    *
@@ -108,7 +110,7 @@ public:
    *  \note Transformations must not contain scaling
    *
    */
-  virtual void setTransform(const float m[16]) = 0;
+  void setTransform(const float m[16]);
 
   /*! \brief Check for collision with another model (do not mix model types)
    *
@@ -121,19 +123,17 @@ public:
    *
    *  \sa ModelCollisionTest::maxProcessingTimedOut()
    */
-  virtual bool modelCollision(ModelCollisionTest* test, int maxProcessingTime = 0) const = 0;
+  bool modelCollision(ModelCollisionTest* test, int maxProcessingTime = 0) const;
 
   //! Returns true if the ray given in world space coordinates intersects with the object
-  virtual bool rayCollision(RayCollisionTest* test) const = 0;
+  bool rayCollision(RayCollisionTest* test) const;
 
   //! Returns true if the given sphere collides with the model
-  virtual bool sphereCollision(SphereCollisionTest* test) const = 0;
+  bool sphereCollision(SphereCollisionTest* test) const;
 
-  /*! \brief Create a new collision model object
-   *
-   *  Use delete when finished with it
-   */
-  static CollisionModel3D* create(ModelType type = DynamicModel);
+private:
+  class Private;
+  Private* const d;
 };
 
 /*! \brief Inconsistency exception.

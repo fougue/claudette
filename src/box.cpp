@@ -28,14 +28,14 @@
 ////////////////////////////////////////////////////
 // code from here is used in detection process
 
-int BoxTreeInnerNode::getTrianglesNumber() const
+std::size_t BoxTreeInnerNode::getTrianglesNumber() const
 {
   return m_Boxes.size();
 }
 
-const BoxedTriangle* BoxTreeInnerNode::getTriangle(int which) const
+const BoxedTriangle* BoxTreeInnerNode::getTriangle(std::size_t which) const
 {
-  if (which<0 || which>=getTrianglesNumber()) return NULL;
+  if (which >= getTrianglesNumber()) return NULL;
   return m_Boxes[which];
 }
 

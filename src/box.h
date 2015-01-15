@@ -132,19 +132,19 @@ public:
   /** Returns true if the node is a leaf node. */
   virtual bool isLeaf() const  = 0;
   /** Returns the number of sons this node has */
-  virtual int            getSonsNumber() const = 0;
+  virtual int getSonsNumber() const = 0;
   /** Returns a son node, by index */ 
-  virtual const BoxTreeNode*   getSon(int which) const = 0;
+  virtual const BoxTreeNode* getSon(int which) const = 0;
   BoxTreeNode* getSon(int which)
   { return const_cast<BoxTreeNode*>(const_cast<BoxTreeNode*>(this)->getSon(which)); }
   /** Returns the number of triangles in this node.
       Only non-zero for leaf nodes. */
-  virtual int            getTrianglesNumber() const = 0;
+  virtual std::size_t getTrianglesNumber() const = 0;
   /** Returns the boxed triangle contained in this node
       by its index 
   */
-  virtual const BoxedTriangle* getTriangle(int which) const = 0;
-  BoxedTriangle* getTriangle(int which)
+  virtual const BoxedTriangle* getTriangle(std::size_t which) const = 0;
+  BoxedTriangle* getTriangle(std::size_t which)
   { return const_cast<BoxedTriangle*>(const_cast<BoxTreeNode*>(this)->getTriangle(which)); }
 };
 
@@ -181,8 +181,8 @@ public:
     return n;
   }
 
-  int getTrianglesNumber() const;
-  const BoxedTriangle* getTriangle(int which) const;
+  std::size_t getTrianglesNumber() const;
+  const BoxedTriangle* getTriangle(std::size_t which) const;
 
   const BoxTreeNode* getSon(int which) const
   {
@@ -207,8 +207,8 @@ public:
   virtual bool isLeaf() const { return true; }
   int getSonsNumber() const { return 0; }
   const BoxTreeNode* getSon(int /*which*/) const { return NULL; }
-  int getTrianglesNumber() const { return 1; }
-  const BoxedTriangle* getTriangle(int which) const
+  std::size_t getTrianglesNumber() const { return 1; }
+  const BoxedTriangle* getTriangle(std::size_t which) const
   {
     if (which==0) return this;
     return NULL;

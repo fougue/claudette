@@ -49,11 +49,6 @@ void ModelCollisionTest::setAccuracyDepth(int depth)
   m_accuracyDepth = depth;
 }
 
-bool ModelCollisionTest::collides() const
-{
-  return BaseCollisionTest::collides() && m_iOtherColTri != -1;
-}
-
 bool ModelCollisionTest::maxProcessingTimedOut() const
 {
   return m_maxProcessingTimedOut;
@@ -69,26 +64,17 @@ int ModelCollisionTest::otherTriangleId() const
   return m_iOtherColTri;
 }
 
-const float *ModelCollisionTest::point() const
+void ModelCollisionTest::computePoint()
 {
-  if (this->collides()) {
-    if (m_colPointIsDirty) {
-      ModelCollisionTest* mutableThis = const_cast<ModelCollisionTest*>(this);
-      mutableThis->computeCollisionPoint();
+    if (this->collides() && m_colPointIsDirty) {
+        const float* colTriPtr = this->modelTriangle();
+        const Triangle colTri(Vector3D::asConstRef(colTriPtr),
+                              Vector3D::asConstRef(colTriPtr + 3),
+                              Vector3D::asConstRef(colTriPtr + 6));
+        const Triangle otherTri(Vector3D::asConstRef(m_otherColTri),
+                                Vector3D::asConstRef(m_otherColTri + 3),
+                                Vector3D::asConstRef(m_otherColTri + 6));
+        Vector3D::asRef(this->mutablePoint()) = my_tri_tri_intersect(colTri, otherTri);
+        m_colPointIsDirty = false;
     }
-  }
-  return BaseCollisionTest::point();
-}
-
-void ModelCollisionTest::computeCollisionPoint()
-{
-  const float* colTriPtr = this->modelTriangle();
-  const Triangle colTri(Vector3D::asConstRef(colTriPtr),
-                        Vector3D::asConstRef(colTriPtr + 3),
-                        Vector3D::asConstRef(colTriPtr + 6));
-  const Triangle otherTri(Vector3D::asConstRef(m_otherColTri),
-                          Vector3D::asConstRef(m_otherColTri + 3),
-                          Vector3D::asConstRef(m_otherColTri + 6));
-  Vector3D::asRef(this->mutablePoint()) = my_tri_tri_intersect(colTri, otherTri);
-  m_colPointIsDirty = false;
 }
