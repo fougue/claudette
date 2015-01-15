@@ -5,14 +5,14 @@
 #include <algorithm>
 
 ModelCollisionTest::ModelCollisionTest()
-  : m_otherModel(NULL),
-    m_otherModelTransform(NULL),
-    m_accuracyDepth(-1),
-    m_iOtherColTri(-1),
-    m_colPointIsDirty(false),
-    m_maxProcessingTimedOut(false)
+    : m_otherModel(NULL),
+      m_otherModelTransform(NULL),
+      m_accuracyDepth(-1),
+      m_iOtherColTri(-1),
+      m_colPointIsDirty(false),
+      m_maxProcessingTimedOut(false)
 {
-  std::fill(m_otherColTri, m_otherColTri + 9, float(0));
+    std::fill(m_otherColTri, m_otherColTri + 9, float(0));
 }
 
 ModelCollisionTest::~ModelCollisionTest()
@@ -21,47 +21,47 @@ ModelCollisionTest::~ModelCollisionTest()
 
 const CollisionModel3D *ModelCollisionTest::otherModel() const
 {
-  return m_otherModel;
+    return m_otherModel;
 }
 
 void ModelCollisionTest::setOtherModel(const CollisionModel3D *other)
 {
-  m_otherModel = other;
+    m_otherModel = other;
 }
 
 const float *ModelCollisionTest::otherModelTransform() const
 {
-  return m_otherModelTransform;
+    return m_otherModelTransform;
 }
 
 void ModelCollisionTest::setOtherModelTransform(const float trsf[])
 {
-  m_otherModelTransform = trsf;
+    m_otherModelTransform = trsf;
 }
 
 int ModelCollisionTest::accuracyDepth() const
 {
-  return m_accuracyDepth;
+    return m_accuracyDepth;
 }
 
 void ModelCollisionTest::setAccuracyDepth(int depth)
 {
-  m_accuracyDepth = depth;
+    m_accuracyDepth = depth;
 }
 
 bool ModelCollisionTest::maxProcessingTimedOut() const
 {
-  return m_maxProcessingTimedOut;
+    return m_maxProcessingTimedOut;
 }
 
 const float *ModelCollisionTest::otherModelTriangle() const
 {
-  return m_otherColTri;
+    return m_otherColTri;
 }
 
 int ModelCollisionTest::otherTriangleId() const
 {
-  return m_iOtherColTri;
+    return m_iOtherColTri;
 }
 
 void ModelCollisionTest::computePoint()

@@ -3,12 +3,12 @@
 #include "math3d.h"
 
 RayCollisionTest::RayCollisionTest()
-  : m_raySegMin(0),
-    m_raySegMax(3.4e+38f),
-    m_raySearch(RayCollisionTest::SearchFirstTriangle)
+    : m_raySegMin(0),
+      m_raySegMax(3.4e+38f),
+      m_raySearch(RayCollisionTest::SearchFirstTriangle)
 {
-  Vector3D::fillFloatVec(m_rayOrigin, 0);
-  Vector3D::setFloatVec(m_rayDirection, 0, 0, 1); // Z
+    Vector3D::fillFloatVec(m_rayOrigin, 0);
+    Vector3D::setFloatVec(m_rayDirection, 0, 0, 1); // Z
 }
 
 RayCollisionTest::~RayCollisionTest()
@@ -17,46 +17,46 @@ RayCollisionTest::~RayCollisionTest()
 
 const float *RayCollisionTest::rayOrigin() const
 {
-  return m_rayOrigin;
+    return m_rayOrigin;
 }
 
 void RayCollisionTest::setRayOrigin(float x, float y, float z)
 {
-  Vector3D::setFloatVec(m_rayOrigin, x, y, z);
+    Vector3D::setFloatVec(m_rayOrigin, x, y, z);
 }
 
 const float *RayCollisionTest::rayDirection() const
 {
-  return m_rayDirection;
+    return m_rayDirection;
 }
 
 void RayCollisionTest::setRayDirection(float x, float y, float z)
 {
-  Vector3D::setFloatVec(m_rayDirection, x, y, z);
+    Vector3D::setFloatVec(m_rayDirection, x, y, z);
 }
 
 float RayCollisionTest::raySegmentMin() const
 {
-  return m_raySegMin;
+    return m_raySegMin;
 }
 
 float RayCollisionTest::raySegmentMax() const
 {
-  return m_raySegMax;
+    return m_raySegMax;
 }
 
 void RayCollisionTest::setRaySegmentBounds(float min, float max)
 {
-  m_raySegMin = min;
-  m_raySegMax = max;
+    m_raySegMin = min;
+    m_raySegMax = max;
 }
 
 RayCollisionTest::Search RayCollisionTest::raySearch() const
 {
-  return m_raySearch;
+    return m_raySearch;
 }
 
 void RayCollisionTest::setRaySearch(RayCollisionTest::Search srh)
 {
-  m_raySearch = srh;
+    m_raySearch = srh;
 }
