@@ -1,5 +1,4 @@
-#ifndef FOUGCOLDET_RAY_COLLISION_TEST_H
-#define FOUGCOLDET_RAY_COLLISION_TEST_H
+#pragma once
 
 #include "base_collision_test.h"
 
@@ -43,5 +42,3 @@ private:
   float m_raySegMax;
   RayCollisionTest::Search m_raySearch;
 };
-
-#endif // FOUGCOLDET_RAY_COLLISION_TEST_H

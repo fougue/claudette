@@ -28,8 +28,8 @@
  *  Interface for the library.
  *  Isolated from any implementation details.
  */
-#ifndef FOUGCOLDET_COLLISION_MODEL_3D_H
-#define FOUGCOLDET_COLLISION_MODEL_3D_H
+
+#pragma once
 
 #include "global.h"
 #include <cstddef>
@@ -165,5 +165,3 @@ FOUGCOLDET_LIB_EXPORT bool SphereRayCollision(const float sphereCenter[3],
 FOUGCOLDET_LIB_EXPORT bool SphereSphereCollision(const float c1[3], float r1,
                                                  const float c2[3], float r2,
                                                  float point[3]);
-
-#endif // FOUGCOLDET_COLLISION_MODEL_3D_H

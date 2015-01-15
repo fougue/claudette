@@ -21,8 +21,8 @@
  *
  * Or visit the home page: http://photoneffect.com/coldet/
  */
-#ifndef H_MATH3D
-#define H_MATH3D
+
+#pragma once
 
 #include <cmath>
 
@@ -310,5 +310,3 @@ ScaleMatrix3D(const float s)
 {
    return ScaleMatrix3D(Vector3D(s,s,s));
 }
-
-#endif // H_MATH3D

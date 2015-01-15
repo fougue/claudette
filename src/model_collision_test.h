@@ -1,5 +1,4 @@
-#ifndef FOUGCOLDET_MODEL_COLLISION_TEST_H
-#define FOUGCOLDET_MODEL_COLLISION_TEST_H
+#pragma once
 
 #include "base_collision_test.h"
 
@@ -51,5 +50,3 @@ private:
 
   bool m_maxProcessingTimedOut;
 };
-
-#endif // FOUGCOLDET_MODEL_COLLISION_TEST_H

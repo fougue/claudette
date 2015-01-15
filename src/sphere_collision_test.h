@@ -1,5 +1,4 @@
-#ifndef FOUGCOLDET_SPHERE_COLLISION_TEST_H
-#define FOUGCOLDET_SPHERE_COLLISION_TEST_H
+#pragma once
 
 #include "base_collision_test.h"
 
@@ -20,5 +19,3 @@ private:
   float m_sphereCenter[3];
   float m_sphereRadius;
 };
-
-#endif // FOUGCOLDET_SPHERE_COLLISION_TEST_H

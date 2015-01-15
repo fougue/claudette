@@ -21,9 +21,8 @@
  *
  * Or visit the home page: http://photoneffect.com/coldet/
  */
-#ifndef H_SYSDEP
-#define H_SYSDEP
 
+#pragma once
 
 ///////////////////////////////////////////////////
 // g++ compiler assumed on UNIX systems
@@ -55,6 +54,3 @@ DWORD GetTickCount();
 #error No system specified (FOUG_OS_UNIX FOUG_OS_WINDOWS FOUG_OS_MAC)
 
 #endif
-
-
-#endif // H_SYSDEP

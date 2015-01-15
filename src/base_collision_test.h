@@ -1,5 +1,4 @@
-#ifndef FOUGCOLDET_BASE_COLLISION_TEST_H
-#define FOUGCOLDET_BASE_COLLISION_TEST_H
+#pragma once
 
 #include "global.h"
 
@@ -42,5 +41,3 @@ private:
   float m_colTri[9];
   float m_colPnt[3];
 };
-
-#endif // FOUGCOLDET_BASE_COLLISION_TEST_H

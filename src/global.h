@@ -1,5 +1,4 @@
-#ifndef FOUGCOLDET_GLOBAL_H
-#define FOUGCOLDET_GLOBAL_H
+#pragma once
 
 #ifndef FOUG_DECL_EXPORT
  #if defined(WIN64) || defined(_WIN64) || defined(__WIN64__) \
@@ -21,5 +20,3 @@
 #else
 # define FOUGCOLDET_LIB_EXPORT
 #endif /* FOUGCOLDET_LIB_DLL */
-
-#endif /* FOUGCOLDET_GLOBAL_H */

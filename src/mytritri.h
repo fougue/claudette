@@ -21,8 +21,8 @@
  *
  * Or visit the home page: http://photoneffect.com/coldet/
  */
-#ifndef H_MYTRITRI
-#define H_MYTRITRI
+
+#pragma once
 
 #include "box.h"
 
@@ -90,7 +90,3 @@ public:
 
   int i1,i2;
 };
-
-
-
-#endif // H_MYTRITRI

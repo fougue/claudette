@@ -21,8 +21,8 @@
  *
  * Or visit the home page: http://photoneffect.com/coldet/
  */
-#ifndef H_BOX
-#define H_BOX
+
+#pragma once
 
 #include <cstring> // For NULL
 #include <vector>
@@ -215,6 +215,3 @@ public:
   }
 
 };
-
-
-#endif // H_BOX
