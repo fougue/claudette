@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 include(CheckIncludeFiles)
 
-project(fougcoldet)
+project(claudette)
 
 # Allow the user to build a static library
 option(BUILD_SHARED_LIBS "Build shared libraries (DLL)" ON)
@@ -9,8 +9,8 @@ option(BUILD_SHARED_LIBS "Build shared libraries (DLL)" ON)
 # Add source files
 file(GLOB  ALL_SRC_FILES  src/*)
 
-# Declare fougcoldet library
-add_library(fougcoldet ${ALL_SRC_FILES})
+# Declare claudette library
+add_library(claudette ${ALL_SRC_FILES})
 
 # Specific flags depending on platform
 if(WIN32)
@@ -22,8 +22,8 @@ elseif(UNIX)
 endif()
 
 if(BUILD_SHARED_LIBS)
-  add_definitions(-DFOUGCOLDET_LIB_DLL
-                  -DFOUGCOLDET_LIB_MAKE_DLL)
+  add_definitions(-DCLAUDETTE_LIB_DLL
+                  -DCLAUDETTE_LIB_MAKE_DLL)
 endif()
 
 # Declare installs
@@ -33,8 +33,8 @@ install(FILES src/collision_model_3d.h
               src/ray_collision_test.h
               src/sphere_collision_test.h
               src/global.h
-        DESTINATION include/fougcoldet)
-install(TARGETS fougcoldet
+        DESTINATION include/claudette)
+install(TARGETS claudette
           RUNTIME DESTINATION lib
           LIBRARY DESTINATION lib
           ARCHIVE DESTINATION lib)

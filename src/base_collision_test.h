@@ -7,7 +7,7 @@
  *  A collision test consists of some input data (specific to the test) and output data (see
  *  modelTriangle(), triangleId(), ...)
  */
-class FOUGCOLDET_LIB_EXPORT BaseCollisionTest
+class CLAUDETTE_LIB_EXPORT BaseCollisionTest
 {
 public:
     BaseCollisionTest();

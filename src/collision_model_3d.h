@@ -65,7 +65,7 @@ class SphereCollisionTest;
  *  \endcode
  *
  */
-class FOUGCOLDET_LIB_EXPORT CollisionModel3D
+class CLAUDETTE_LIB_EXPORT CollisionModel3D
 {
 public:
     //! Various model types
@@ -154,7 +154,7 @@ class Inconsistency {};
 /*! \brief Checks for intersection between a ray and a sphere.
  *  \param point will contain point of intersection, if one is found.
  */
-FOUGCOLDET_LIB_EXPORT bool SphereRayCollision(const float sphereCenter[3],
+CLAUDETTE_LIB_EXPORT bool SphereRayCollision(const float sphereCenter[3],
 float sphereRadius,
 const float rayOrigin[3],
 const float rayDirection[3],
@@ -162,6 +162,6 @@ float point[3]);
 
 /*! \brief Checks for intersection between 2 spheres.
  */
-FOUGCOLDET_LIB_EXPORT bool SphereSphereCollision(const float c1[3], float r1,
+CLAUDETTE_LIB_EXPORT bool SphereSphereCollision(const float c1[3], float r1,
 const float c2[3], float r2,
 float point[3]);

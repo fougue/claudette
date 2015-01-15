@@ -4,7 +4,7 @@
 
 /*! \brief Collision test with a ray
  */
-class FOUGCOLDET_LIB_EXPORT RayCollisionTest : public BaseCollisionTest
+class CLAUDETTE_LIB_EXPORT RayCollisionTest : public BaseCollisionTest
 {
 public:
     //! Search option for the colliding triangle

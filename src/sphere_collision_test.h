@@ -4,7 +4,7 @@
 
 /*! \brief Collision test with a sphere
  */
-class FOUGCOLDET_LIB_EXPORT SphereCollisionTest : public BaseCollisionTest
+class CLAUDETTE_LIB_EXPORT SphereCollisionTest : public BaseCollisionTest
 {
 public:
     SphereCollisionTest();
