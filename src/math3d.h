@@ -58,7 +58,6 @@ struct Vector3D
   Vector3D& operator+=(const Vector3D& v) { x+=v.x; y+=v.y; z+=v.z; return *this; }
   Vector3D& operator*=(float s) { x*=s; y*=s; z*=s; return *this; }
   Vector3D& operator/=(float s) { return *this *= (1.0f/s); }
-  bool      operator==(const Vector3D& v) { return x==v.x && y==v.y && z==v.z; }
 
   const float* constData() const { return &x; }
 
@@ -79,23 +78,6 @@ struct Vector3D
   static void fillFloatVec(float vec[3], float value);
   static void setFloatVec(float vec[3], float x, float y, float z);
 };
-
-#define _11 sclr.s11
-#define _12 sclr.s12
-#define _13 sclr.s13
-#define _14 sclr.s14
-#define _21 sclr.s21
-#define _22 sclr.s22
-#define _23 sclr.s23
-#define _24 sclr.s24
-#define _31 sclr.s31
-#define _32 sclr.s32
-#define _33 sclr.s33
-#define _34 sclr.s34
-#define _41 sclr.s41
-#define _42 sclr.s42
-#define _43 sclr.s43
-#define _44 sclr.s44
 
 /** 3x3 matrix */
 struct Matrix3
@@ -132,10 +114,10 @@ struct Matrix3D
            float f31, float f32, float f33, float f34,
            float f41, float f42, float f43, float f44)
   {
-    _11=f11; _12=f12; _13=f13; _14=f14;
-    _21=f21; _22=f22; _23=f23; _24=f24;
-    _31=f31; _32=f32; _33=f33; _34=f34;
-    _41=f41; _42=f42; _43=f43; _44=f44;
+    sclr.s11=f11; sclr.s12=f12; sclr.s13=f13; sclr.s14=f14;
+    sclr.s21=f21; sclr.s22=f22; sclr.s23=f23; sclr.s24=f24;
+    sclr.s31=f31; sclr.s32=f32; sclr.s33=f33; sclr.s34=f34;
+    sclr.s41=f41; sclr.s42=f42; sclr.s43=f43; sclr.s44=f44;
   }
 
   Matrix3D& operator*= (const Matrix3D& m)
@@ -203,16 +185,16 @@ inline Vector3D CrossProduct(const Vector3D& v1, const Vector3D& v2)
 
 inline Vector3D Transform(const Vector3D& v, const Matrix3D& m)
 {
-  return Vector3D(v.x*m._11 + v.y*m._21 + v.z*m._31 + m._41,
-                  v.x*m._12 + v.y*m._22 + v.z*m._32 + m._42,
-                  v.x*m._13 + v.y*m._23 + v.z*m._33 + m._43);
+  return Vector3D(v.x*m.sclr.s11 + v.y*m.sclr.s21 + v.z*m.sclr.s31 + m.sclr.s41,
+                  v.x*m.sclr.s12 + v.y*m.sclr.s22 + v.z*m.sclr.s32 + m.sclr.s42,
+                  v.x*m.sclr.s13 + v.y*m.sclr.s23 + v.z*m.sclr.s33 + m.sclr.s43);
 }
 
 inline Vector3D rotateVector(const Vector3D& v, const Matrix3D& m)
 {
-  return Vector3D(v.x*m._11 + v.y*m._21 + v.z*m._31,
-                  v.x*m._12 + v.y*m._22 + v.z*m._32,
-                  v.x*m._13 + v.y*m._23 + v.z*m._33);
+  return Vector3D(v.x*m.sclr.s11 + v.y*m.sclr.s21 + v.z*m.sclr.s31,
+                  v.x*m.sclr.s12 + v.y*m.sclr.s22 + v.z*m.sclr.s32,
+                  v.x*m.sclr.s13 + v.y*m.sclr.s23 + v.z*m.sclr.s33);
 }
 
 inline Matrix3D operator*(float scalar, const Matrix3D& m)
@@ -226,22 +208,22 @@ inline Matrix3D operator*(float scalar, const Matrix3D& m)
 inline Matrix3D operator*(const Matrix3D& m1, const Matrix3D& m2)
 {
   return Matrix3D(
-    m1._11*m2._11 + m1._12*m2._21 + m1._13*m2._31 + m1._14*m2._41,
-    m1._11*m2._12 + m1._12*m2._22 + m1._13*m2._32 + m1._14*m2._42,
-    m1._11*m2._13 + m1._12*m2._23 + m1._13*m2._33 + m1._14*m2._43,
-    m1._11*m2._14 + m1._12*m2._24 + m1._13*m2._34 + m1._14*m2._44,
-    m1._21*m2._11 + m1._22*m2._21 + m1._23*m2._31 + m1._24*m2._41,
-    m1._21*m2._12 + m1._22*m2._22 + m1._23*m2._32 + m1._24*m2._42,
-    m1._21*m2._13 + m1._22*m2._23 + m1._23*m2._33 + m1._24*m2._43,
-    m1._21*m2._14 + m1._22*m2._24 + m1._23*m2._34 + m1._24*m2._44,
-    m1._31*m2._11 + m1._32*m2._21 + m1._33*m2._31 + m1._34*m2._41,
-    m1._31*m2._12 + m1._32*m2._22 + m1._33*m2._32 + m1._34*m2._42,
-    m1._31*m2._13 + m1._32*m2._23 + m1._33*m2._33 + m1._34*m2._43,
-    m1._31*m2._14 + m1._32*m2._24 + m1._33*m2._34 + m1._34*m2._44,
-    m1._41*m2._11 + m1._42*m2._21 + m1._43*m2._31 + m1._44*m2._41,
-    m1._41*m2._12 + m1._42*m2._22 + m1._43*m2._32 + m1._44*m2._42,
-    m1._41*m2._13 + m1._42*m2._23 + m1._43*m2._33 + m1._44*m2._43,
-    m1._41*m2._14 + m1._42*m2._24 + m1._43*m2._34 + m1._44*m2._44);
+    m1.sclr.s11*m2.sclr.s11 + m1.sclr.s12*m2.sclr.s21 + m1.sclr.s13*m2.sclr.s31 + m1.sclr.s14*m2.sclr.s41,
+    m1.sclr.s11*m2.sclr.s12 + m1.sclr.s12*m2.sclr.s22 + m1.sclr.s13*m2.sclr.s32 + m1.sclr.s14*m2.sclr.s42,
+    m1.sclr.s11*m2.sclr.s13 + m1.sclr.s12*m2.sclr.s23 + m1.sclr.s13*m2.sclr.s33 + m1.sclr.s14*m2.sclr.s43,
+    m1.sclr.s11*m2.sclr.s14 + m1.sclr.s12*m2.sclr.s24 + m1.sclr.s13*m2.sclr.s34 + m1.sclr.s14*m2.sclr.s44,
+    m1.sclr.s21*m2.sclr.s11 + m1.sclr.s22*m2.sclr.s21 + m1.sclr.s23*m2.sclr.s31 + m1.sclr.s24*m2.sclr.s41,
+    m1.sclr.s21*m2.sclr.s12 + m1.sclr.s22*m2.sclr.s22 + m1.sclr.s23*m2.sclr.s32 + m1.sclr.s24*m2.sclr.s42,
+    m1.sclr.s21*m2.sclr.s13 + m1.sclr.s22*m2.sclr.s23 + m1.sclr.s23*m2.sclr.s33 + m1.sclr.s24*m2.sclr.s43,
+    m1.sclr.s21*m2.sclr.s14 + m1.sclr.s22*m2.sclr.s24 + m1.sclr.s23*m2.sclr.s34 + m1.sclr.s24*m2.sclr.s44,
+    m1.sclr.s31*m2.sclr.s11 + m1.sclr.s32*m2.sclr.s21 + m1.sclr.s33*m2.sclr.s31 + m1.sclr.s34*m2.sclr.s41,
+    m1.sclr.s31*m2.sclr.s12 + m1.sclr.s32*m2.sclr.s22 + m1.sclr.s33*m2.sclr.s32 + m1.sclr.s34*m2.sclr.s42,
+    m1.sclr.s31*m2.sclr.s13 + m1.sclr.s32*m2.sclr.s23 + m1.sclr.s33*m2.sclr.s33 + m1.sclr.s34*m2.sclr.s43,
+    m1.sclr.s31*m2.sclr.s14 + m1.sclr.s32*m2.sclr.s24 + m1.sclr.s33*m2.sclr.s34 + m1.sclr.s34*m2.sclr.s44,
+    m1.sclr.s41*m2.sclr.s11 + m1.sclr.s42*m2.sclr.s21 + m1.sclr.s43*m2.sclr.s31 + m1.sclr.s44*m2.sclr.s41,
+    m1.sclr.s41*m2.sclr.s12 + m1.sclr.s42*m2.sclr.s22 + m1.sclr.s43*m2.sclr.s32 + m1.sclr.s44*m2.sclr.s42,
+    m1.sclr.s41*m2.sclr.s13 + m1.sclr.s42*m2.sclr.s23 + m1.sclr.s43*m2.sclr.s33 + m1.sclr.s44*m2.sclr.s43,
+    m1.sclr.s41*m2.sclr.s14 + m1.sclr.s42*m2.sclr.s24 + m1.sclr.s43*m2.sclr.s34 + m1.sclr.s44*m2.sclr.s44);
 }
 
 inline Matrix3D
@@ -328,23 +310,5 @@ ScaleMatrix3D(const float s)
 {
    return ScaleMatrix3D(Vector3D(s,s,s));
 }
-
-
-#undef _11
-#undef _12
-#undef _13
-#undef _14
-#undef _21
-#undef _22
-#undef _23
-#undef _24
-#undef _31
-#undef _32
-#undef _33
-#undef _34
-#undef _41
-#undef _42
-#undef _43
-#undef _44
 
 #endif // H_MATH3D
