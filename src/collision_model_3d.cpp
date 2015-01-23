@@ -108,10 +108,10 @@ CollisionModel3D::~CollisionModel3D()
     delete d;
 }
 
-void CollisionModel3D::setTriangleCount(int num)
+void CollisionModel3D::setTriangleCount(std::size_t count)
 {
     if (!d->m_isFinalized)
-        d->m_triangles.reserve(num);
+        d->m_triangles.reserve(count);
 }
 
 void CollisionModel3D::addTriangle(float x1, float y1, float z1,

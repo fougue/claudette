@@ -84,7 +84,7 @@ public:
     ~CollisionModel3D();
 
     //! Optional: Optimization for construction speed. If you know the number of triangles
-    void setTriangleCount(int num);
+    void setTriangleCount(std::size_t count);
 
     //! Add a triangle to the mesh
     void addTriangle(float x1, float y1, float z1,
