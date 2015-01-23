@@ -29,6 +29,8 @@
 #include "math3d.h"
 #include "sysdep.h"
 
+namespace Claudette {
+namespace Internal {
 
 /** Stores rotation vectors used in the intersection tests, 
     to avoid recalculating them each time. */
@@ -215,3 +217,6 @@ public:
     }
 
 };
+
+} // namespace Internal
+} // namespace Claudette

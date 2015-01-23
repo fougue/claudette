@@ -4,6 +4,8 @@
 
 #include <algorithm>
 
+namespace Claudette {
+
 ModelCollisionTest::ModelCollisionTest()
     : m_otherModel(NULL),
       m_otherModelTransform(NULL),
@@ -66,15 +68,21 @@ int ModelCollisionTest::otherTriangleId() const
 
 void ModelCollisionTest::computePoint()
 {
+    using namespace Internal;
+
     if (this->collides() && m_colPointIsDirty) {
         const float* colTriPtr = this->modelTriangle();
-        const Triangle colTri(Vector3D::asConstRef(colTriPtr),
-                              Vector3D::asConstRef(colTriPtr + 3),
-                              Vector3D::asConstRef(colTriPtr + 6));
-        const Triangle otherTri(Vector3D::asConstRef(m_otherColTri),
-                                Vector3D::asConstRef(m_otherColTri + 3),
-                                Vector3D::asConstRef(m_otherColTri + 6));
+        const Triangle colTri(
+                    Vector3D::asConstRef(colTriPtr),
+                    Vector3D::asConstRef(colTriPtr + 3),
+                    Vector3D::asConstRef(colTriPtr + 6));
+        const Triangle otherTri(
+                    Vector3D::asConstRef(m_otherColTri),
+                    Vector3D::asConstRef(m_otherColTri + 3),
+                    Vector3D::asConstRef(m_otherColTri + 6));
         Vector3D::asRef(this->mutablePoint()) = my_tri_tri_intersect(colTri, otherTri);
         m_colPointIsDirty = false;
     }
 }
+
+} // namespace Claudette

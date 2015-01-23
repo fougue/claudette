@@ -4,11 +4,13 @@
 
 #include <algorithm>
 
+namespace Claudette {
+
 BaseCollisionTest::BaseCollisionTest()
     : m_collides(false),
       m_iColTri(-1)
 {
-    Vector3D::fillFloatVec(m_colPnt, 0);
+    Internal::Vector3D::fillFloatVec(m_colPnt, 0);
     std::fill(m_colTri, m_colTri + 9, float(0));
 }
 
@@ -42,3 +44,5 @@ float *BaseCollisionTest::mutablePoint()
 {
     return m_colPnt;
 }
+
+} // namespace Claudette

@@ -26,6 +26,9 @@
 
 #include "box.h"
 
+namespace Claudette {
+namespace Internal {
+
 /** A slower triangle-triangle intersection test, that returns the
     point of intersection. */
 Vector3D my_tri_tri_intersect(const Triangle& t1, const Triangle& t2);
@@ -90,3 +93,6 @@ public:
 
     int i1,i2;
 };
+
+} // namespace Internal
+} // namespace Claudette

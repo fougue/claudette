@@ -26,6 +26,9 @@
 
 #include <cmath>
 
+namespace Claudette {
+namespace Internal {
+
 struct Vector3D;
 struct Matrix3;
 struct Matrix3D;
@@ -310,3 +313,6 @@ ScaleMatrix3D(const float s)
 {
     return ScaleMatrix3D(Vector3D(s,s,s));
 }
+
+} // namespace Internal
+} // namespace Claudette

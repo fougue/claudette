@@ -26,6 +26,9 @@
 
 #include <algorithm>
 
+namespace Claudette {
+namespace Internal {
+
 const Vector3D Vector3D::Zero(0.0f,0.0f,0.0f);
 const Matrix3D Matrix3D::Identity(1.0f,0.0f,0.0f,0.0f,
                                   0.0f,1.0f,0.0f,0.0f,
@@ -115,3 +118,6 @@ void Vector3D::setFloatVec(float vec[], float x, float y, float z)
     vec[1] = y;
     vec[2] = z;
 }
+
+} // namespace Internal
+} // namespace Claudette

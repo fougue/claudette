@@ -2,6 +2,8 @@
 
 #include "global.h"
 
+namespace Claudette {
+
 /*! \brief Base class for all collision tests
  *
  *  A collision test consists of some input data (specific to the test) and output data (see
@@ -41,3 +43,5 @@ private:
     float m_colTri[9];
     float m_colPnt[3];
 };
+
+} // namespace Claudette

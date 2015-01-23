@@ -25,6 +25,9 @@
 #include "box.h"
 #include "mytritri.h"
 
+namespace Claudette {
+namespace Internal {
+
 ////////////////////////////////////////////////////
 // code from here is used in detection process
 
@@ -306,3 +309,5 @@ bool Triangle::intersect(const Triangle& t) const
                               (float*)&t.v3.x) != 0);
 }
 
+} // namespace Internal
+} // namespace Claudette

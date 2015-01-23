@@ -2,6 +2,8 @@
 
 #include "base_collision_test.h"
 
+namespace Claudette {
+
 /*! \brief Collision test with a ray
  */
 class CLAUDETTE_LIB_EXPORT RayCollisionTest : public BaseCollisionTest
@@ -42,3 +44,5 @@ private:
     float m_raySegMax;
     RayCollisionTest::Search m_raySearch;
 };
+
+} // namespace Claudette

@@ -2,6 +2,8 @@
 
 #include "base_collision_test.h"
 
+namespace Claudette {
+
 class CollisionModel3D;
 
 /*! \brief Collision test between two meshes
@@ -50,3 +52,5 @@ private:
 
     bool m_maxProcessingTimedOut;
 };
+
+} // namespace Claudette

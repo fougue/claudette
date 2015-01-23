@@ -13,6 +13,12 @@
 #include <cassert>
 #include <vector>
 
+namespace Claudette {
+
+using namespace Internal;
+
+namespace {
+
 class Check
 {
 public:
@@ -32,6 +38,8 @@ public:
     const BoxTreeNode* m_second;
     int m_depth;
 };
+
+} // Anonymous namespace
 
 class CollisionModel3D::Private
 {
@@ -118,8 +126,8 @@ void CollisionModel3D::addTriangle(float x1, float y1, float z1,
 void CollisionModel3D::addTriangle(const float v1[3], const float v2[3], const float v3[3])
 {
     d->addTriangle(Vector3D(v1[0], v1[1], v1[2]),
-            Vector3D(v2[0], v2[1], v2[2]),
-            Vector3D(v3[0], v3[1], v3[2]));
+                   Vector3D(v2[0], v2[1], v2[2]),
+                   Vector3D(v3[0], v3[1], v3[2]));
 }
 
 void CollisionModel3D::finalize()
@@ -457,3 +465,5 @@ bool SphereSphereCollision(const float c1[], float r1,
     }
     return false;
 }
+
+} // namespace Claudette

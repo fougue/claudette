@@ -24,6 +24,9 @@
 #include "sysdep.h"
 #include "mytritri.h"
 
+namespace Claudette {
+namespace Internal {
+
 Vector3D my_tri_tri_intersect(const Triangle& t1, const Triangle& t2)
 {
     Plane p1(t1.v1,t1.v2,t1.v3);
@@ -71,3 +74,6 @@ Vector3D my_tri_tri_intersect(const Triangle& t1, const Triangle& t2)
     if (td2.pointInTri(P12)) return P12;
     return Vector3D::Zero;
 }
+
+} // namespace Internal
+} // namespace Claudette

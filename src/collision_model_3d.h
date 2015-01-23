@@ -34,6 +34,8 @@
 #include "global.h"
 #include <cstddef>
 
+namespace Claudette {
+
 class ModelCollisionTest;
 class RayCollisionTest;
 class SphereCollisionTest;
@@ -155,13 +157,15 @@ class Inconsistency {};
  *  \param point will contain point of intersection, if one is found.
  */
 CLAUDETTE_LIB_EXPORT bool SphereRayCollision(const float sphereCenter[3],
-float sphereRadius,
-const float rayOrigin[3],
-const float rayDirection[3],
-float point[3]);
+                                             float sphereRadius,
+                                             const float rayOrigin[3],
+                                             const float rayDirection[3],
+                                             float point[3]);
 
 /*! \brief Checks for intersection between 2 spheres.
  */
 CLAUDETTE_LIB_EXPORT bool SphereSphereCollision(const float c1[3], float r1,
-const float c2[3], float r2,
-float point[3]);
+                                                const float c2[3], float r2,
+                                                float point[3]);
+
+} // namespace Claudette
