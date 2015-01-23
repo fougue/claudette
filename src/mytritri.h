@@ -55,6 +55,20 @@ public:
         }
     }
 
+#ifdef PATCH__BUG_PRECISION_DAVIDGF
+    // See http://sourceforge.net/p/coldet/discussion/45834/thread/28241f70/
+    static bool sameSide(const Vector3D& p1, const Vector3D& p2, const Vector3D& a, const Vector3D& b)
+    {
+        const Vector3D cp1 = CrossProduct(b-a, p1-a);
+        const Vector3D cp2 = CrossProduct(b-a, p2-a);
+        return ((cp1 * cp2) >= 0);
+    }
+
+    bool pointInTri(const Vector3D& P)
+    {
+        return (sameSide(P,v1,v2,v3) && sameSide(P,v2,v1,v3) && sameSide(P,v3,v1,v2));
+    }
+#else
     bool pointInTri(const Vector3D& P)
     {
         Vector3D u(P[i1]-v1[i1],
@@ -78,6 +92,7 @@ public:
         }
         return (a>=0 && (a+b)<=1);
     }
+#endif // PATCH_BUG_PRECISION_DAVIDGF
 
     const Vector3D& operator[] (int index)
     {
