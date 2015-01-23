@@ -81,19 +81,19 @@ public:
     std::vector<BoxedTriangle> m_triangles;
 
     /** Root of the hierarchy tree */
-    BoxTreeInnerNode           m_root;
+    BoxTreeInnerNode m_root;
 
     /** The current transform and its inverse */
-    Matrix3D                   m_transform;
-    Matrix3D                   m_invTransform;
+    Matrix3D m_transform;
+    Matrix3D m_invTransform;
 
     /** Flag for indicating the model is finalized. */
-    bool                       m_isFinalized;
+    bool m_isFinalized;
 
     /** Static models will maintain the same transform for a while
         so the inverse transform is calculated each set instead
         of in the collision test. */
-    bool                       m_isStatic;
+    bool m_isStatic;
 };
 
 CollisionModel3D::CollisionModel3D(ModelType type)
@@ -427,10 +427,10 @@ bool CollisionModel3D::sphereCollision(SphereCollisionTest *test) const
 
 
 bool SphereRayCollision(const float sphereCenter[3],
-float sphereRadius,
-const float rayOrigin[3],
-const float rayDirection[3],
-float point[3])
+                        float sphereRadius,
+                        const float rayOrigin[3],
+                        const float rayDirection[3],
+                        float point[3])
 {
     const Vector3D& C=  *((const Vector3D*)sphereCenter);
     const Vector3D& O = *((const Vector3D*)rayOrigin);
