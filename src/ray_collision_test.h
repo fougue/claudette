@@ -4,17 +4,17 @@
 
 namespace Claudette {
 
-/*! \brief Collision test with a ray
- */
+/*! Collision test with a ray */
 class CLAUDETTE_API RayCollisionTest : public BaseCollisionTest
 {
 public:
-    //! Search option for the colliding triangle
+    /*! Search option for the colliding triangle */
     enum Search
     {
-        //! Search closest triangle on the ray (will slow the test considerably)
+        /*! Search closest triangle on the ray (will slow the test considerably) */
         SearchClosestTriangle,
-        //! Search stop on the first triangle found that collides with the ray (may not be the closest)
+        /*! Search stop on the first triangle found that collides with the
+         *  ray (may not be the closest) */
         SearchFirstTriangle
     };
 
@@ -29,9 +29,8 @@ public:
 
     float raySegmentMin() const;
     float raySegmentMax() const;
-    /*! The default ray is a standard infinite ray. However, using segmin and segmax a line segment
-     *  along the ray can be defined
-     */
+    /*! The default ray is a standard infinite ray. However, using \p min and
+     *  \p max a line segment along the ray can be defined */
     void setRaySegmentBounds(float min = 0.f, float max = 3.4e+38f);
 
     Search raySearch() const;

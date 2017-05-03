@@ -4,8 +4,7 @@
 
 namespace Claudette {
 
-/*! \brief Collision test with a sphere
- */
+/*! Collision test with a sphere */
 class CLAUDETTE_API SphereCollisionTest : public BaseCollisionTest
 {
 public:

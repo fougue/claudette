@@ -6,8 +6,7 @@ namespace Claudette {
 
 class CollisionModel3D;
 
-/*! \brief Collision test between two meshes
- */
+/*! Collision test between two meshes */
 class CLAUDETTE_API ModelCollisionTest : public BaseCollisionTest
 {
 public:
@@ -17,10 +16,11 @@ public:
     const CollisionModel3D* otherModel() const;
     void setOtherModel(const CollisionModel3D* other);
 
-    /*! \brief Allows overriding the other model's transform, by supplying an alternative one.
+    /*! Allows overriding the other model's transform, by supplying an
+     *  alternative one.
      *
-     *  This can be useful when testing a model against itself with different orientations.
-     */
+     *  This can be useful when testing a model against itself with different
+     *  orientations. */
     const float* otherModelTransform() const;
     void setOtherModelTransform(const float trsf[16]);
 
@@ -29,10 +29,10 @@ public:
 
     bool maxProcessingTimedOut() const;
 
-    //! The triangle that collided (in other model)
+    /*! Triangle that collided (in other model) */
     const float* otherModelTriangle() const;
 
-    //! The index of the triangle that collided (belongs to other model)
+    /*! Index of the triangle that collided (belongs to other model) */
     int otherTriangleId() const;
 
     void computePoint();
@@ -47,7 +47,7 @@ private:
     float m_otherColTri[9];
     int m_iOtherColTri;
 
-    //! Does the collision point need to be recomputed ?
+    /*! Does the collision point need to be recomputed ? */
     bool m_colPointIsDirty;
 
     bool m_maxProcessingTimedOut;

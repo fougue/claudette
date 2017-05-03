@@ -4,10 +4,10 @@
 
 namespace Claudette {
 
-/*! \brief Base class for all collision tests
+/*! Base class for all collision tests
  *
- *  A collision test consists of some input data (specific to the test) and output data (see
- *  modelTriangle(), triangleId(), ...)
+ *  A collision test consists of some input data (specific to the test) and
+ *  output data (see modelTriangle(), triangleId(), ...)
  */
 class CLAUDETTE_API BaseCollisionTest
 {
@@ -15,10 +15,10 @@ public:
     BaseCollisionTest();
     ~BaseCollisionTest();
 
-    //! Collision result, returns true if a collision was detected
+    /*! Collision result, returns \c true if a collision was detected */
     bool collides() const;
 
-    /*! \brief The triangle that collided (belongs to _this_ model)
+    /*! Triangle that collided (belongs to _this_ model)
      *
      *  The result is returned as a pointer being an array of 9 float values :
      *    \li x,y,z of 1st vertex : [0..2]
@@ -27,10 +27,10 @@ public:
      */
     const float* modelTriangle() const;
 
-    //! The index of the triangle that collided (belongs to _this_ model)
+    /*! Index of the triangle that collided (belongs to _this_ model) */
     int triangleId() const;
 
-    //! The detected collision point (array of 3 items containing x,y,z coords)
+    /*! Detected collision point (array of 3 items containing x,y,z coords) */
     const float* point() const;
 
 protected:
