@@ -6,7 +6,7 @@ namespace Claudette {
 
 /*! \brief Collision test with a sphere
  */
-class CLAUDETTE_LIB_EXPORT SphereCollisionTest : public BaseCollisionTest
+class CLAUDETTE_API SphereCollisionTest : public BaseCollisionTest
 {
 public:
     SphereCollisionTest();

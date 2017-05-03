@@ -8,7 +8,7 @@ class CollisionModel3D;
 
 /*! \brief Collision test between two meshes
  */
-class CLAUDETTE_LIB_EXPORT ModelCollisionTest : public BaseCollisionTest
+class CLAUDETTE_API ModelCollisionTest : public BaseCollisionTest
 {
 public:
     ModelCollisionTest();

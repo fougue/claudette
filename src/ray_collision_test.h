@@ -6,7 +6,7 @@ namespace Claudette {
 
 /*! \brief Collision test with a ray
  */
-class CLAUDETTE_LIB_EXPORT RayCollisionTest : public BaseCollisionTest
+class CLAUDETTE_API RayCollisionTest : public BaseCollisionTest
 {
 public:
     //! Search option for the colliding triangle

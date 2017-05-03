@@ -9,7 +9,7 @@ namespace Claudette {
  *  A collision test consists of some input data (specific to the test) and output data (see
  *  modelTriangle(), triangleId(), ...)
  */
-class CLAUDETTE_LIB_EXPORT BaseCollisionTest
+class CLAUDETTE_API BaseCollisionTest
 {
 public:
     BaseCollisionTest();
