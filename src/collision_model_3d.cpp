@@ -76,23 +76,22 @@ public:
         return int(bt - &(*m_triangles.begin()));
     }
 
-    /** Stores all the actual triangles.  Other objects will use pointers into this array.
-     */
+    // Stores all the actual triangles.
+    // Other objects will use pointers into this array.
     std::vector<BoxedTriangle> m_triangles;
 
-    /** Root of the hierarchy tree */
+    // Root of the hierarchy tree
     BoxTreeInnerNode m_root;
 
-    /** The current transform and its inverse */
+    // The current transform and its inverse
     Matrix3D m_transform;
     Matrix3D m_invTransform;
 
-    /** Flag for indicating the model is finalized. */
+    // Flag for indicating the model is finalized
     bool m_isFinalized;
 
-    /** Static models will maintain the same transform for a while
-        so the inverse transform is calculated each set instead
-        of in the collision test. */
+    // Static models will maintain the same transform for a while so the inverse
+    // transform is calculated each set instead of in the collision test
     bool m_isStatic;
 };
 
@@ -136,7 +135,7 @@ void CollisionModel3D::finalize()
         throw Inconsistency();
     // Prepare initial triangle list
     d->m_isFinalized = true;
-    for (unsigned i = 0; i < d->m_triangles.size(); ++i) {
+    for (std::size_t i = 0; i < d->m_triangles.size(); ++i) {
         BoxedTriangle& bt = d->m_triangles[i];
         d->m_root.m_Boxes.push_back(&bt);
     }
