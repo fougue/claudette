@@ -2,7 +2,6 @@
 
 #include "box.h"
 #include "math3d.h"
-#include "sysdep.h"
 #include "mytritri.h"
 
 #include "model_collision_test.h"
@@ -11,6 +10,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <chrono>
 #include <vector>
 
 namespace Claudette {
@@ -166,8 +166,10 @@ bool CollisionModel3D::modelCollision(ModelCollisionTest *test, int maxProcessin
         throw Inconsistency();
     if (!other->d->m_isFinalized)
         throw Inconsistency();
-    Matrix3D t = test->otherModelTransform() == NULL ? other->d->m_transform :
-                                                       Private::toMatrix3D(test->otherModelTransform());
+    Matrix3D t =
+            test->otherModelTransform() == NULL ?
+                other->d->m_transform :
+                Private::toMatrix3D(test->otherModelTransform());
     if (d->m_isStatic)
         t *= d->m_invTransform;
     else
@@ -177,11 +179,8 @@ bool CollisionModel3D::modelCollision(ModelCollisionTest *test, int maxProcessin
     int accuracyDepth = test->accuracyDepth();
     if (accuracyDepth < 0)
         accuracyDepth = 0xFFFFFF;
-    if (maxProcessingTime == 0)
-        maxProcessingTime = 0xFFFFFF;
 
-    const DWORD beginTime = GetTickCount();
-    DWORD endTime = 0;
+    const auto beginTimePoint = std::chrono::high_resolution_clock::now();
 
     const std::size_t num = std::max(d->m_triangles.size(), other->d->m_triangles.size());
     std::size_t allocated = std::max(std::size_t(64), (num>>4));
@@ -201,10 +200,16 @@ bool CollisionModel3D::modelCollision(ModelCollisionTest *test, int maxProcessin
             checks.insert(checks.end(), allocated, c);
             allocated *= 2;
         }
-        endTime = GetTickCount();
-        if (endTime >= (beginTime + maxProcessingTime)) {
-            test->m_maxProcessingTimedOut = true;
-            return false;
+        if (maxProcessingTime > 0) {
+            const auto currTimePoint = std::chrono::high_resolution_clock::now();
+            const auto diffTimePoint = currTimePoint - beginTimePoint;
+            typedef std::chrono::milliseconds msec;
+            const auto elapsedTime =
+                    std::chrono::duration_cast<msec>(diffTimePoint).count();
+            if (elapsedTime >= maxProcessingTime) {
+                test->m_maxProcessingTimedOut = true;
+                return false;
+            }
         }
 
         // @@@ add depth check

@@ -21,7 +21,6 @@
  *
  * Or visit the home page: http://photoneffect.com/coldet/
  */
-#include "sysdep.h"
 #include "math3d.h"
 
 #include <algorithm>

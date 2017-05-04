@@ -27,7 +27,6 @@
 #include <cstring> // For NULL
 #include <vector>
 #include "math3d.h"
-#include "sysdep.h"
 
 namespace Claudette {
 namespace Internal {

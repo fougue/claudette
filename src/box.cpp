@@ -21,7 +21,6 @@
  *
  * Or visit the home page: http://photoneffect.com/coldet/
  */
-#include "sysdep.h"
 #include "box.h"
 #include "mytritri.h"
 
