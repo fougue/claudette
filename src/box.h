@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include <cstring> // For NULL
+#include <cstring>
 #include <vector>
 #include "math3d.h"
 
@@ -155,8 +155,8 @@ class BoxTreeInnerNode : public BoxTreeNode
 public:
     BoxTreeInnerNode(const Vector3D& pos, const Vector3D& size, int logdepth)
         : BoxTreeNode(pos,size),
-          m_First(NULL), m_OwnFirst(true),
-          m_Second(NULL), m_OwnSecond(true),
+          m_First(nullptr), m_OwnFirst(true),
+          m_Second(nullptr), m_OwnSecond(true),
           m_logdepth(logdepth) {}
     ~BoxTreeInnerNode()
     {
@@ -177,8 +177,8 @@ public:
     int getSonsNumber() const
     {
         int n=0;
-        if (m_First!=NULL) n++;
-        if (m_Second!=NULL) n++;
+        if (m_First!=nullptr) n++;
+        if (m_Second!=nullptr) n++;
         return n;
     }
 
@@ -189,7 +189,7 @@ public:
     {
         if (which==0) return m_First;
         if (which==1) return m_Second;
-        return NULL;
+        return nullptr;
     }
 
     BoxTreeNode*                m_First;
@@ -207,12 +207,12 @@ public:
     BoxedTriangle(const Vector3D& _1, const Vector3D& _2, const Vector3D& _3);
     virtual bool isLeaf() const { return true; }
     int getSonsNumber() const { return 0; }
-    const BoxTreeNode* getSon(int /*which*/) const { return NULL; }
+    const BoxTreeNode* getSon(int /*which*/) const { return nullptr; }
     std::size_t getTrianglesNumber() const { return 1; }
     const BoxedTriangle* getTriangle(std::size_t which) const
     {
         if (which==0) return this;
-        return NULL;
+        return nullptr;
     }
 
 };

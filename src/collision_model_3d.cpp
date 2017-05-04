@@ -23,8 +23,8 @@ class Check
 {
 public:
     Check()
-        : m_first(NULL),
-          m_second(NULL),
+        : m_first(nullptr),
+          m_second(nullptr),
           m_depth(0)
     { }
 
@@ -167,7 +167,7 @@ bool CollisionModel3D::modelCollision(ModelCollisionTest *test, int maxProcessin
     if (!other->d->m_isFinalized)
         throw Inconsistency();
     Matrix3D t =
-            test->otherModelTransform() == NULL ?
+            test->otherModelTransform() == nullptr ?
                 other->d->m_transform :
                 Private::toMatrix3D(test->otherModelTransform());
     if (d->m_isStatic)
@@ -217,8 +217,8 @@ bool CollisionModel3D::modelCollision(ModelCollisionTest *test, int maxProcessin
         Check& c = checks[--queue_idx];
         const BoxTreeNode* first = c.m_first;
         const BoxTreeNode* second = c.m_second;
-        assert(first != NULL);
-        assert(second != NULL);
+        assert(first != nullptr);
+        assert(second != nullptr);
         if (first->intersect(*second, rs)) {
             std::size_t tnum1 = first->getTrianglesNumber();
             std::size_t tnum2 = second->getTrianglesNumber();
@@ -244,8 +244,8 @@ bool CollisionModel3D::modelCollision(ModelCollisionTest *test, int maxProcessin
             else if (first->getSonsNumber() == 0) {
                 const BoxTreeNode* s1 = second->getSon(0);
                 const BoxTreeNode* s2 = second->getSon(1);
-                assert(s1 != NULL);
-                assert(s2 != NULL);
+                assert(s1 != nullptr);
+                assert(s2 != nullptr);
 
                 Check& c1 = checks[queue_idx++];
                 c1.m_first = first;
@@ -258,8 +258,8 @@ bool CollisionModel3D::modelCollision(ModelCollisionTest *test, int maxProcessin
             else if (second->getSonsNumber() == 0) {
                 const BoxTreeNode* f1 = first->getSon(0);
                 const BoxTreeNode* f2 = first->getSon(1);
-                assert(f1 != NULL);
-                assert(f2 != NULL);
+                assert(f1 != nullptr);
+                assert(f2 != nullptr);
 
                 Check& c1 = checks[queue_idx++];
                 c1.m_first = f1;
@@ -275,8 +275,8 @@ bool CollisionModel3D::modelCollision(ModelCollisionTest *test, int maxProcessin
                 if (v1 > v2) {
                     const BoxTreeNode* f1=first->getSon(0);
                     const BoxTreeNode* f2=first->getSon(1);
-                    assert(f1 != NULL);
-                    assert(f2 != NULL);
+                    assert(f1 != nullptr);
+                    assert(f2 != nullptr);
 
                     Check& c1 = checks[queue_idx++];
                     c1.m_first = f1;
@@ -289,8 +289,8 @@ bool CollisionModel3D::modelCollision(ModelCollisionTest *test, int maxProcessin
                 else {
                     const BoxTreeNode* s1 = second->getSon(0);
                     const BoxTreeNode* s2 = second->getSon(1);
-                    assert(s1 != NULL);
-                    assert(s2 != NULL);
+                    assert(s1 != nullptr);
+                    assert(s2 != nullptr);
 
                     Check& c1 = checks[queue_idx++];
                     c1.m_first = first;
@@ -308,7 +308,7 @@ bool CollisionModel3D::modelCollision(ModelCollisionTest *test, int maxProcessin
 
 bool CollisionModel3D::rayCollision(RayCollisionTest *test) const
 {
-    if (test == NULL)
+    if (test == nullptr)
         return false;
 
     float mintparm = 9e9f, tparm;
@@ -387,7 +387,7 @@ bool CollisionModel3D::rayCollision(RayCollisionTest *test) const
 
 bool CollisionModel3D::sphereCollision(SphereCollisionTest *test) const
 {
-    if (test == NULL)
+    if (test == nullptr)
         return false;
 
     test->m_collides = false;

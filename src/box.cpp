@@ -37,7 +37,7 @@ std::size_t BoxTreeInnerNode::getTrianglesNumber() const
 
 const BoxedTriangle* BoxTreeInnerNode::getTriangle(std::size_t which) const
 {
-    if (which >= getTrianglesNumber()) return NULL;
+    if (which >= getTrianglesNumber()) return nullptr;
     return m_Boxes[which];
 }
 
@@ -255,7 +255,7 @@ bool Triangle::intersect(const Vector3D& O, const Vector3D& D, Vector3D& cp,
 
 bool Triangle::intersect(const Vector3D& O, float radius, Vector3D* cp) const
 {
-    if (cp == NULL)
+    if (cp == nullptr)
         return false;
 
     Vector3D& rcp = *cp;
@@ -291,7 +291,7 @@ bool Triangle::intersect(const Vector3D& O, float radius, Vector3D* cp) const
 
 void Triangle::copyCoords(float array[]) const
 {
-    if (array != NULL) {
+    if (array != nullptr) {
         *((Vector3D*)&array[0]) = this->v1;
         *((Vector3D*)&array[3]) = this->v2;
         *((Vector3D*)&array[6]) = this->v3;

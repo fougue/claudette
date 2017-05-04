@@ -153,13 +153,13 @@ int BoxTreeInnerNode::divide(int p_depth)
     const std::size_t b2num = s->m_Boxes.size();
     if ((b1num==bnum  ||  b2num==bnum))// && p_depth>m_logdepth)
     {
-        delete m_First;  m_First=NULL;
-        delete m_Second; m_Second=NULL;
+        delete m_First;  m_First=nullptr;
+        delete m_Second; m_Second=nullptr;
         return depth+1;
     }
 
     m_Boxes.clear();
-    if (f->m_Boxes.empty()) { delete m_First; m_First=NULL; }
+    if (f->m_Boxes.empty()) { delete m_First; m_First=nullptr; }
     else
         if (f->m_Boxes.size()==1)
         {
@@ -168,7 +168,7 @@ int BoxTreeInnerNode::divide(int p_depth)
             m_OwnFirst=false;
             m_First=bt;
         } else depth=f->divide(p_depth+1);
-    if (s->m_Boxes.empty()) { delete m_Second; m_Second=NULL; }
+    if (s->m_Boxes.empty()) { delete m_Second; m_Second=nullptr; }
     else
         if (s->m_Boxes.size()==1)
         {

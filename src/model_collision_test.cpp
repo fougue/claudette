@@ -7,8 +7,8 @@
 namespace Claudette {
 
 ModelCollisionTest::ModelCollisionTest()
-    : m_otherModel(NULL),
-      m_otherModelTransform(NULL),
+    : m_otherModel(nullptr),
+      m_otherModelTransform(nullptr),
       m_accuracyDepth(-1),
       m_iOtherColTri(-1),
       m_colPointIsDirty(false),
