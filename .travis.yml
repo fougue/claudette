@@ -1,0 +1,34 @@
+language: cpp
+
+sudo: false
+
+_anchors:
+  - &gcc49-packages
+    apt:
+      sources:
+      - ubuntu-toolchain-r-test
+      packages:
+      - gcc-4.9
+      - g++-4.9
+
+matrix:
+  include:
+    # Linux GCC-4.6 debug
+    - compiler: gcc
+      env: TRAVIS_BUILD_TYPE=Debug
+    # Linux GCC-4.9 release
+    - compiler: gcc-4.9
+      addons: *gcc49-packages
+      env: TRAVIS_BUILD_TYPE=Release  TRAVIS_GCC_VERSION=4.9
+    # OSX Clang debug
+    - os: osx
+      compiler: clang
+      env: TRAVIS_BUILD_TYPE=Debug
+    # OSX Clang release
+    - os: osx
+      compiler: clang
+      env: TRAVIS_BUILD_TYPE=Release
+
+script:
+  - chmod +x scripts/travis-build.sh
+  - ./scripts/travis-build.sh

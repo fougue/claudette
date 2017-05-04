@@ -14,16 +14,16 @@ add_library(claudette ${ALL_SRC_FILES})
 
 # Specific flags depending on platform
 if(WIN32)
-  add_definitions(-DNOMINMAX -DFOUG_OS_WINDOWS -DCOLDET_EXPORTS)
+    add_definitions(-DNOMINMAX -DFOUG_OS_WINDOWS -DCOLDET_EXPORTS)
 elseif(APPLE)
-  add_definitions(-DFOUG_OS_MAC)
+    add_definitions(-DFOUG_OS_MAC)
 elseif(UNIX)
-  add_definitions(-DFOUG_OS_UNIX)
+    add_definitions(-DFOUG_OS_UNIX)
 endif()
 
 if(BUILD_SHARED_LIBS)
-  add_definitions(-DCLAUDETTE_LIB_DLL
-                  -DCLAUDETTE_LIB_MAKE_DLL)
+    add_definitions(-DCLAUDETTE_LIB_DLL
+                    -DCLAUDETTE_LIB_MAKE_DLL)
 endif()
 
 # Declare installs

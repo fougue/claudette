@@ -1,3 +1,8 @@
+[![Build Status](https://travis-ci.org/fougue/claudette.svg?branch=develop)](https://travis-ci.org/fougue/claudette)
+[![License](https://img.shields.io/badge/license-LGPL%202.1-blue.svg)](https://github.com/fougue/claudette/blob/develop/COPYING)
+[![Version](https://img.shields.io/badge/version-v0.1.0-blue.svg?style=flat)](https://github.com/fougue/claudette/releases)
+
+
 Claudette v0.1 by Fougue Ltd, fork of
 
 ColDet - 3D Collision Detection Library  
