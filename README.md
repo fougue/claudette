@@ -64,8 +64,8 @@ Contact Information
      email:    contact@fougue.pro
 
    Original author of ColDet:  
-     Web Site: http://photoneffect.com/coldet/  
-     email:    photon@photoneffect.com
+     Web Site: http://sourceforge.net/projects/coldet  
+     contact:  https://github.com/amirgeva
 
 
 Hwow to report a bug
